@@ -1,0 +1,38 @@
+{% extends 'cocheria/index.html' %}
+{% block title %}Servicios{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="row">
+		{% if contenido %}
+		<br>
+		<strong>{% titulo 'True' %}PRINCIPALES SERVICIOS{% endtitulo %}</strong>
+		<div id="centrado">
+		<p>Contamos con una gama de servicios para brindarles con <strong>responsabilidad</strong> y <strong>profesionalismo</strong> conocelos.</p>
+		</div>
+			{% for cont in contenido %}
+				 <div class="centercolumn" id="caja-servicios">
+				 {% if user.is_superuser %}
+					<a class="btn-editar" href="{% url 'cocheria:eliminar' ID=cont.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ cont.titulo }}?');"><img src="{% static 'cocheria/img/cerrar.png' %}"/></a>
+					<a class="btn-editar" href="{% url 'cocheria:editar' ID=cont.id %}"><img src="{% static 'cocheria/img/editar.png' %}"/></a>
+				 <br>	  			 
+	  			 {% endif %}
+						{% if cont.imagen %}
+							<div class="conimagen" style="background-image: url({{ cont.imagen.url }});">
+						{% else %}
+							<div class="conimagen" style='background-image: url({% static "cocheria/img/no-imagen.png" %});'>
+						{% endif %}
+							<div class="izquierda">
+							{% titulo 'True' %}{{ cont.titulo }}{% endtitulo %}
+							{% render_post cont.texto %}
+							</div>
+						</div>
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="card">
+			<p><h1>No hay contenidos para mostrar..</h1></p>
+			</div>
+		{% endif %}
+</div>
+{% endblock %} 

@@ -1,0 +1,27 @@
+{% extends 'clinicas/index.html' %}
+{% block title %}HOME{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="row">
+	{% if principal %}
+		{% for contenido in principal %}
+ 		<div class="centercolumn" style="background-color: lightgray;">
+ 			<section>
+ 		   {% if user.is_superuser %}
+				<a class="btn-editar" href="{% url 'clinicas:eliminar' ID=contenido.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ contenido.titulo }}?');"><img src="{% static 'sitio/img/cerrar.png' %}"/></a>
+				<a class="btn-editar" href="{% url 'clinicas:editar' ID=contenido.id %}"><img src="{% static 'sitio/img/editar.png' %}"/></a>
+				<br>
+			{% endif %}
+ 			{% render_post contenido.texto %}
+ 			</section>
+ 		</div>
+ 		{% endfor %}
+  {% else %}
+  <div class="centercolumn" style="background-color: white;">
+  	<h1> No hay Post</h1>
+  </div> 
+ `{% endif %}
+</div>
+{% endblock %}
+ 

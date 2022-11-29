@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% extends 'panel/panel.html' %}
+{% load static %}
+{% block title %} Contenidos {% endblock %}	
+{% load custom_tags %}
+{% load static %}
+{% block principal %}
+{% if form %}
+			<div class="form_box">
+			<div id="centrado">
+			<div id="titulo">{% if tp == 'nuevo' %}CREAR NUEVO {% else %}EDITAR {% endif %} POST</div></div>
+			<div id="centrado">
+   	<form method="POST" enctype="multipart/form-data">
+   		{{ form.media }}
+			<p><strong>Titulo</strong></p>
+        	{{ form.titulo }}
+        	<p><strong>Categoria</strong></p>
+        	{{ form.categoria }}
+        	<p><strong>Texto</strong></p>
+        	{{ form.texto }}
+        	<p><strong>Imagen de cabecera</strong></p>
+        	<p>{{ form.imagen }}</p>
+        	<p><strong>Mostrar imagen:</strong></p>
+        	{{ form.mostrar_img }}
+            {% csrf_token %}
+        	<br>
+        	<button type="submit">{% if tp == 'nuevo' %}PUBLICAR {% else %}GUARDAR {% endif %}</button>
+    	</form>
+			</div>
+			</div>
+{% else %}
+
+{% endif %}
+
+{% endblock %}
+
+{% block lateral %}
+{% if contenidos %}
+  		   		<div id="centrado">
+					<div id="titulo">Total de resultados: <strong>{{ contenidos.count }}</strong></div>
+					</div>
+<div class="fakeimg" style="max-height: 400px; overflow-y: auto;">
+					<table>
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Titulo</th>
+	  					<th style=" text-align: center; padding: 6px;">Categoria</th>
+	  					<th style=" text-align: center; padding: 6px;">Estado</th>
+      			</tr>
+      			{% for x in contenidos %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;" href="{% url 'panel:contenidos' tp='editar' ID=x.id %}">
+					{{ x.titulo }}
+					</a>
+					</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;" href="">
+					{{ x.categoria }}
+					</a>
+					</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;" href="">
+					{{ x.id }}
+					</a>
+					</td>
+					<tr>
+					{% endfor %}
+      			</table>	
+{% else %}
+<h2>No hay resultados encontrados!!</h2>
+{% endif %}
+</div>
+{% endblock %}

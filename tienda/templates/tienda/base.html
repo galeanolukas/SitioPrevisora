@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Previsora del Norte | {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'sitio/css/estilo.css' %}">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+{% include 'tienda/navbar.html' %}
+<div class="header">
+		<div id="centrado">
+		{% if user.username %}
+		{% else %}
+		<p style="color: red;">Por favor debes ingresar para poder realizar tus compras</p>
+		<p style="font-size: 12px;">En caso de que todavía no estés registrados por favor completa tu registro haciendo click <a href="sitio:registro">aquí</a></p>
+		{% endif %}
+		</div>
+</div>
+<div class="container">
+    <div class="row" style="margin-top: auto;">
+            <button class="custom-boton" style="float: right;">
+            {% with totail_items=carrito|length %}
+                {% if carrito|length > 0 %}
+                    <a href="{% url 'tienda:cart_detail' %}" style="color: #ffffff">
+                    <i style="font-size:24px; color: white;" class='fas'><ion-icon name="cart-outline"></ion-icon></i>
+                        {{ totail_items }} producto{{ totail_items|pluralize }}, ARS. ${{ carrito.get_total_price }}
+                    </a>
+                    {% else %}
+                    <i style="font-size:24px; color: white;" class='fas'><ion-icon name="cart-outline"></ion-icon></i>
+                     0
+                {% endif %}
+            {% endwith %}
+           </button>
+    </div>
+<div class="contenido">
+{% block content %}
+
+
+{% endblock %}
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</div>
+</div>
+<a class='flotante-up' id="flotante-up" onclick="VolverAlTop()" href="#">
+	<button><img src="{% static 'sitio/img/back-button.png' %}" border="0"/></button>
+</a>
+<script type="text/python" src="{% static 'sitio/scripts/w-button.py' %}" id="script2"></script>
+<div class='flotante-whattsapp'>
+	<button id="bot-whattsapp"><img src="{% static 'sitio/img/whatts-icon.png' %}" border="0"/><strong> Atención por mensajes</strong>
+	    <span id="info-num">
+	    	<strong>
+	    		<p><img src="{% static 'sitio/img/logo-previsora-w.png' %}" alt=""><a href="https://api.whatsapp.com/send?phone=+543704278890" target="blank"> 370-4278890</a></p>
+	    		<p><img src="{% static 'sitio/img/logo-previsora-w.png' %}" alt=""><a href="https://api.whatsapp.com/send?phone=+543704207491" target="blank"> 370-4207491</a></p>
+	    		<p><img src="{% static 'sitio/img/logo-previsora-w.png' %}" alt=""><a href="https://api.whatsapp.com/send?phone=+543704026911" target="blank"> 370-4026911</a></p>
+	    	</strong>
+	    <br>
+	    </span>
+	</button>
+</div>
+<script type="text/javascript" src="{% static 'sitio/js/menu.js' %}"></script>
+{% block footer %}
+<div class="footer">
+	<div class="pie-colum">
+		<div id="caja-pie">
+			<p>
+			<div class="share-iconos">
+				<strong>Visita nuestras redes:</strong><br><br>
+				<a href="https://www.facebook.com/laprevisoradelnorte" target="blank"><img src="{% static 'sitio/img/face.png' %}"></a>
+				<a href="" ><img src="{% static 'sitio/img/tweeter.png' %}" alt=""></a>
+				<a href="" ><img src="{% static 'sitio/img/instagram.png' %}" alt=""></a>
+			</div>
+				<div class="menu-pie" style="padding-top: 5px;">
+				<a href="{% url 'clientes' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Clientes</strong></a>
+				<a href="{% url 'tienda:product_list' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Tienda</strong></a>
+				<a href="{% url 'cocheria:home' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Cocheria</strong></a>
+				<a href="{% url 'contacto' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Contacto</strong></a>
+				<a href="{% url 'registro' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Registro</strong></a>
+				</div>
+			</p>
+			<p style="padding-top: 10px;">La Previsora del Norte S.R.L<br><br><span class="copyleft">&copy;</span>Copyleft {% now 'Y' %}</p>
+			<div class="direccion-bottom"><img src="{% static 'sitio/img/ubica-icono.png' %}" style="width: 30px; height: 30px;" /><a href="https://goo.gl/maps/kMesM1AgdZk85Lvz5" target="blank"> Dean Funes 655 - Formosa, Argentina</a>
+  			</div>
+  				<p style="font-size: 10px; color: white;">Desarrollado por:
+				<strong><a href="mailto:galeanolukas@gmail.com" style="text-decoration:none; color:white;">galeanolukas@gmail.com</a></strong>
+				</p>
+		</div>
+	</div>
+</div>
+{% endblock %}
+<script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+</body>
+</html>

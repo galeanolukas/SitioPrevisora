@@ -1,0 +1,81 @@
+{% load static %}
+<div class="fakeimg" style="height: 400px; overflow-y: auto;">
+			<div id="centrado">
+			<img src="{% static 'sitio/img/logo-previsora.png' %}" alt="Afiliado" style="width: 32px; height: 32px;">
+			<a href="#imprimir" style="float: right;">
+			<ion-icon name="print-outline"></ion-icon>
+			</a>
+			</div>
+			{% if estado == 'afiliados' %}
+			Registro afiliado N°: <strong>{{ resultado.id }}</strong>	
+			{% elif estado == 'solicitudes' %}
+			Registro solicitud N°: <strong>{{ resultado.id }}</strong>
+			{% elif estado == 'pagos' %}
+			Registro pago N°: <strong>{{ resultado.id }}</strong>
+			{% endif %}
+			<hr>
+			<br>
+{% if estado == 'afiliados' %}
+			<p>Nombre y Apellido: &nbsp<strong>{{ resultado.datos.nombre }} {{ resultado.datos.apellido }}</strong></p>
+			<p>Dni: &nbsp<strong>{{ resultado.datos.dni }} </strong></p>
+			<p>Teléfono: &nbsp<strong> {{ resultado.datos.telefono }}</strong></p>
+			<p>Email: &nbsp<strong> {{ resultado.datos.email }} </strong></p>
+			<p>Dirección: &nbsp<strong>{{ resultado.datos.direccion }} </strong></p>
+			<p>Numero de Afiliado: &nbsp<strong> {{ resultado.numero }}</strong></p>
+			<br>
+			<hr>
+			<br>
+			<p>Fecha de Alta: &nbsp<strong>{{ resultado.fecha }}</strong></p>
+			<p>Plan: &nbsp<strong>{{ resultado.datos.plan.titulo }}</strong></p>
+			<p>Monto: &nbsp<strong>${{ resultado.datos.plan.valor }}</strong></p>
+			<p>Plazo de Carencia: &nbsp<strong>{{ resultado.datos.plan.vigencia }} meses</strong></p>
+			<p>Fin de Carencia: &nbsp<strong>{{ resultado.fin_de_carencia }}</strong></p>
+			<br>
+			<hr>
+			<br>
+{% elif estado == 'solicitudes' %}
+			<p>Nombre y Apellido: &nbsp<strong>{{ resultado.nombre }} {{ resultado.apellido }}</strong></p>
+			<p>Dni: &nbsp<strong>{{ resultado.dni }} </strong></p>
+			<p>Edad: &nbsp<strong>{{ resultado.edad }}</strong></p>
+			<p>Teléfono: &nbsp<strong> {{ resultado.telefono }}</strong></p>
+			<p>Email: &nbsp<strong> {{ resultado.correo }} </strong></p>
+			<p>Dirección: &nbsp<strong>{{ resultado.direccion }} </strong></p>
+			<p>Numero de Afiliado: &nbsp<strong> {{ resultado.numero }}</strong></p>
+			<br>
+			<hr>
+			<br>
+			<p>Fecha de Alta: &nbsp<strong>{{ resultado.fecha }}</strong></p>
+			<p>Plan: &nbsp<strong>{{ resultado.plan.titulo }}</strong></p>
+			<p>Monto: &nbsp<strong>${{ resultado.plan.valor }}</strong></p>
+			<p>Plazo de Carencia: &nbsp<strong>{{ resultado.plan.vigencia }} meses</strong></p>
+			<br>
+			<hr>
+			<br>
+{% elif estado == 'pagos' %}
+			<p>Nombre y Apellido: &nbsp<strong> {{ resultado.categoria.nombre }}</strong></p>
+			<p>Concepto: <strong> {{ resultado.categoria.titulo }}</strong></p>
+			<p>Dni: &nbsp<strong> {{ resultado.categoria.dni }} </strong></p>
+			<p>Medio: &nbsp<strong> {{ resultado.medio }} </strong></p>
+			<p>Importe: <strong>$ {{ resultado.valor }} </strong></p>
+			<p>Numero de Afiliado: &nbsp<strong> {{ resultado.categoria.numero }}</strong></p>
+			<br>
+			<hr>
+			<br>
+			<p>Fecha de pago: &nbsp<strong> {{ resultado.fecha }}</strong></p>
+			<p>Comprobante: &nbsp<strong><a href="{{ resultado.comprobante.url }}" target="blank">Descargar</strong></p>
+			<br>
+			<hr>
+			<br>
+{% else %}
+			<p>Usuario: &nbsp<strong>{{ resultado.username }}</strong></p>
+			<p>Nombre y apellido: &nbsp<strong>{{ resultado.perfil.nombre }} {{ resultado.last_name }}</strong></p>
+			<p>Estado: &nbsp<strong>{% if resultado.is_active %}Activo{% else %}Inactivo{% endif %}</strong></p>
+			<p>Teléfono: &nbsp<strong> {{ resultado.telefono }}</strong></p>
+			<p>Email: &nbsp<strong> {{ resultado.email }} </strong></p>
+			<p>Numero de Afiliado: &nbsp<strong> {{ resultado.numero }}</strong></p>
+			<p>Rol: &nbsp<strong> {{ resultado.rol }}</strong></p></p>
+			<br>
+			<hr>
+			<br>
+{% endif %}
+</div>

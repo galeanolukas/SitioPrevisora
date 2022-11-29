@@ -1,0 +1,35 @@
+{% extends 'panel/dash-base.html' %}
+{% load custom_tags %} 
+{% block title %}Inicio{% endblock %}
+{% load static %}
+{% block content %}
+<div class="cardBox">
+{% block tarjetas %}
+{% include 'panel/card.html' %}
+{% endblock %}
+</div>
+<div class="principal">
+	<div class="central">
+	{% block principal %}
+	
+	{% endblock %}
+	</div>
+<div class="lateral">
+	{% block lateral %}
+	<div id="centrado">
+	<div id="titulo">Movimientos del Mes</div>
+	</div>
+	<div class="fakeimg">
+	<p>Total registros: </p>
+	<p>Pagos:</p>
+	<p>Afiliaciones: </p>
+	<p>Altas:</p> 
+	<p>Mensajes de contactos: </p>
+	<p>Ventas de la tienda</p>
+	<br>
+	<hr>
+	</div>	
+	{% endblock %}
+</div>
+</div>
+{% endblock %}

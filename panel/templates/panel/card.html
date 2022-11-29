@@ -1,0 +1,67 @@
+{% block tarjetas %}
+	<a href="" style="text-decoration: none;">
+	<div class='card'>
+		<div>
+			<div class='numeros'>{{ caja_uno }}</div>
+			{% if conteo_uno %}
+			<div class="conteo">{{ conteo_uno }}</div>
+			{% else %}
+			{% endif %}
+	   	<div class="cardName">{{ nameandicons | llave:0 }}</div>
+   	</div>
+   	<div class="iconBox">{{ nameandicons | valor:0 }} </div>
+	</div>
+</a>
+<a href="" style="text-decoration: none;">
+	<div class='card'>
+		<div>
+			<div class='numeros'>{{ caja_dos }}</div>
+			{% if conteo_dos %}
+			<div class="conteo">{{ conteo_dos }}</div>
+			{% else %}
+			{% endif %}
+	   	<div class="cardName">{{ nameandicons | llave:1 }}</div>
+   	</div>
+   	<div class="iconBox">{{ nameandicons | valor:1 }} </div>
+	</div>
+</a>
+	<a href="" style="text-decoration: none;">
+	<div class='card'>
+		<div>
+			<div class='numeros'>{{ caja_tres }}</div>
+			{% if conteo_tres %}
+			<div class="conteo">{{ conteo_tres }}</div>
+			{% else %}
+			{% endif %}
+	   	<div class="cardName">{{ nameandicons | llave:2 }}</div>
+   	</div>
+   	<div class="iconBox">{{ nameandicons | valor:2 }} </div>
+	</div>
+</a>
+<a href="{% url 'panel:ver_r' tp='pagos' %}" style="text-decoration: none;">
+	<div class='card'>
+		<div>
+			<div class='numeros'>{{ caja_cuatro }}</div>
+			{% if conteo_cuatro %}
+			<div class="conteo" style="color: var(--azul)">{{ conteo_cuatro }}</div>
+			{% else %}
+			{% endif %}
+	   	<div class="cardName">{{ nameandicons | llave:3 }}</div>
+   	</div>
+   	<div class="iconBox">{{ nameandicons | valor:3 }} </div>
+	</div>
+</a>
+<a href="" style="text-decoration: none;">
+	<div class='card'>
+		<div>
+			<div class='numeros'>{{ caja_cinco }}</div>
+			{% if conteo_cinco %}
+			<div class="conteo">{{ conteo_cinco }}</div>
+			{% else %}
+			{% endif %}
+	   	<div class="cardName">{{ nameandicons | llave:4 }}</div>
+   	</div>
+   	<div class="iconBox">{{ nameandicons | valor:4 }} </div>
+	</div>
+</a>
+{% endblock %}

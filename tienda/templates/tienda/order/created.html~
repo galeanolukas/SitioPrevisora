@@ -1,0 +1,45 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% block title %}
+    Confirmar Compra
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+      <div class="form_box">
+		<div class="fakeimg" style="background-color: #2d487d; color: white;">
+    	<div id="centrado">
+        <div class="row" style="margin-top: 1%">
+            <div class="col-md-8 col-md-offset-2">
+                <h1 class="page-header">Ultimo paso!!</h1>
+                <p>Su orden de compra ha sido generado con mucho exito!!. Su numero de orden es: <h2><strong>{{ order.id }}</strong></h2></p>
+                <p>Realiza el pago de tu compra desde:</p>
+            	<p style="font-size: 12px;">
+            	<strong>Desde el botón de pagos de MercadoPago podrás abonar de forma directa con tarjetas de Crédito/Débito.</strong></p>
+					<p><img src="https://imgmp.mlstatic.com/org-img/banners/ar/medios/785X40.jpg" title="Mercado Pago - Medios de pago" alt="Mercado Pago - Medios de pago" width="785" height="40"/></p>
+					<p><div class="mp_boton"></div></p>
+					<script type="text/javascript">
+// Agrega credenciales de SDK
+  const mp = new MercadoPago('{{ clave_publica }}', {
+        locale: 'es-AR'
+  });
+
+  // Inicializa el checkout
+  mp.checkout({
+      preference: {
+          id: '{{ pref_id }}'
+      },
+      render: {
+            container: '.mp_boton', // Indica el nombre de la clase donde se mostrará el botón de pago
+            label: 'REALIZAR PAGO', // Cambia el texto del botón de pago (opcional)
+      }
+      
+});
+					</script>
+            </div>
+        </div>
+      </div>
+     </div>
+     </div>
+    </div>
+{% endblock %}

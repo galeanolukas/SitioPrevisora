@@ -1,0 +1,28 @@
+{% extends 'sitio/index.html' %}
+{% block title %}CALCULA TU PLAN{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="centercolumn">
+		<div class="leftcolumn">
+			<div class="card">
+			{% titulo 'True' %}CALCULA TU PLAN{% endtitulo %}
+			{% if user.username %}
+			<form method="POST">
+				<label>INGRESA TU EDAD</label>
+				<input/ placeholder="(*) INGRESA TU EDAD" name="edad">
+				<button class="custom-boton">CALCULAR</button>
+			</form>
+			{% else %}
+			<p>Debe registrarse para poder calcular el plan..</p>
+			{% endif %}			
+			</div>		
+		</div>
+		<div class="rightcolumns">
+			<div class="card">
+			</div>
+		</div>	
+	</div>
+</div>
+{% endblock %}

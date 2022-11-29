@@ -1,0 +1,60 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Buscar Afiliado{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+	<div class="card">
+		<div class="form_box">
+			<div class="fakeimg">
+			{% titulo 'True' %}BUSCAR AFILIADO{% endtitulo %}
+			<div id="centrado">
+			{% if resultado %}
+			<hr>
+			<img src="{% static 'sitio/img/logo-previsora.png' %}" alt="Afiliado" style="width: 32px; height: 32px;">
+			<p>Nombre y Apellido: <strong>{{ resultado.nombre }} {{ resultado.apellido }}</strong></p>
+			<p>Fecha de Alta: <strong>{{ resultado.fecha }}</strong></p>
+			<p>Plan: <strong>{{ resultado.plan.titulo }}</strong></p>
+			<p>Monto: <strong>${{ resultado.plan.valor }}</strong></p>
+			<p>Plazo de Carencia: <strong>{{ resultado.plan.vigencia }} meses</strong></p>
+			<hr>
+			<br>
+			<a href="{% url 'asociar' ID=resultado.id %}" onClick="return confirm('¿Deseas asociar al afiliado a tu cuenta?');"><button>ASOCIAR A MI CUENTA</button></a>
+			<a href="{% url 'pagos' %}?dni={{ resultado.dni }}" ><button>CUPÓN DE PAGO</button></a>
+			{% else %}
+			
+			<h2>No hay resultados en la búsqueda....</h2>
+			<p>Ingresa numero de DNI y presiona <strong>"BUSCAR"</strong></p>
+			
+			{% endif %}
+			</div>
+			</div>
+		</div>
+	</div> 	
+	</div>
+	<div class="rightcolumn">
+		<div class="card">
+		 <div class="form_box">
+			<div class="fakeimg">
+			<div id="centrado">
+			<form action="" method="POST">  
+	 		{% csrf_token %}
+			<p><strong>Buscar en base de datos</strong></p>
+			<img src="{% static 'sitio/img/icono-lupa.png' %}" alt="Buscar afiliado">
+			<p>Ingresa el numero de <strong>DNI</strong> del afiliado.</p>
+			<input name="dni" placeholder="NUMERO DE DNI" id="busqueda"/>
+			<button>BUSCAR</button>
+			</form>
+			</div>
+			</div>		
+		</div>	
+	</div>
+	<div class="card">
+		<div class="fakeimg">
+<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+		</div>	
+	</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% extends 'panel/panel.html' %}
+{% load static %}
+{% block title %} Tienda {% endblock %}	
+{% load custom_tags %}
+{% load static %}
+{% block principal %}
+<div class="form_box">
+<div id="centrado">
+<div id="titulo">{% if tp == 'nuevo' %}NUEVO / CARGAR {% elif tp == 'ver' %}{{ resultado.nombre.upper }}{% else %}EDITAR {% endif %}</div>
+</div>
+{% if form %}
+			<div id="centrado">
+   	<form method="POST" enctype="multipart/form-data">
+   		{{ form.media }}
+			<p><strong>Nombre</strong></p>
+        	{{ form.nombre }}
+        	<p><strong>Categoria</strong></p>
+        	{{ form.categoria }}
+        	<p><strong>Precio</strong></p>
+        	{{ form.precio }}
+        	<p><strong>Stock</strong></p>
+        	{{ form.stock }}
+        	<p><strong>Imagen</strong></p>
+        	<p>{{ form.imagen }}</p>
+        	<p><strong>Cuotas</strong></p>
+        	<p>{{ form.cuotas }}</p>
+        	<p><strong>Descripción:</strong></p>
+        	{{ form.descripcion }}
+        	<p><strong>Disponible:</strong></p>
+        	<label class="switch">
+    		{{ form.disponible }} 
+    		<div class="slider"></div> 
+			</label>
+			<br> 	
+            {% csrf_token %}
+        	<br>
+        	<button type="submit">{% if tp == 'nuevo' %}PUBLICAR {% else %}GUARDAR {% endif %}</button>
+    	</form>
+			</div>
+{% elif resultado %}
+<div class="card">
+<div class="fakeimg" style="height: 400px; overflow-y: auto;">
+	<div id="centrado">
+    <h2><strong>$ {{ resultado.precio }}</strong></h2>
+    <p>{{ resultado.categoria }}</p>
+    <p>cantidad: {{ resultado.stock }}</p>
+     <img src="{% if resultado.imagen %} {{ resultado.imagen.url }} {% else %} {% static 'img/No-image-found.jpg' %} {% endif %}" alt="..." style="height: 170px; width: auto">
+	<br>	  
+	  <span>{{ resultado.descripcion }}</span>
+	</div>
+</div>
+<div id="centrado">
+		  <a href="{% url 'panel:tienda'  tp='editar' ID=resultado.id %}" >
+		  	<button class="custom-boton">Editar <ion-icon name="create-outline"></ion-icon></button></a>
+		  <a href="{% url 'panel:tienda' tp='eliminar' ID=resultado.id %}">
+		  <button class="custom-boton">Eliminar <ion-icon name="trash-outline"></ion-icon></button></a>
+</div>
+</div>
+{% else %}
+
+{% endif %}
+</div>
+
+{% endblock %}
+
+{% block lateral %}
+{% if resultados %}
+  		   		<div id="centrado">
+					<div id="titulo">Total de resultados: <strong>{{ resultados.count }}</strong></div>
+					</div>
+<div class="fakeimg" style="max-height: 400px; overflow-y: auto;">
+					<table>
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Producto</th>
+	  					<th style=" text-align: center; padding: 6px;">Categoria</th>
+	  					<th style=" text-align: center; padding: 6px;">Stock</th>
+      			</tr>
+      			{% for x in resultados %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;" href="{% url 'panel:tienda' tp='ver' ID=x.id %}">
+					{{ x.nombre }}
+					</a>
+					</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;">
+					{{ x.categoria }}
+					</a>
+					</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;">
+					{{ x.stock }}
+					</a>
+					</td>
+					<tr>
+					{% endfor %}
+      			</table>	
+{% else %}
+<h2>No hay resultados encontrados!!</h2>
+{% endif %}
+</div>
+{% endblock %}

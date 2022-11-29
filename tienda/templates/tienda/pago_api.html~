@@ -1,0 +1,11 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% block title %}
+    Pago
+{% endblock %}
+
+{% block content %}
+<p>Este es una prueba</p>
+	{{ mp_api | safe }}
+	<div class="cho-container"></div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Pagos{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+<!--  <script type="text/javascript" src="{% static 'sitio/js/mercadopago-indent.js' %}"></script> -->
+	<div class="leftcolumn">
+			<div class="form_box">	
+				<div class="fakeimg">
+				<div id="centrado">
+				{% if cliente.is_superuser %}
+				<p>Lista</p>
+				{% elif cliente %}
+				{% titulo 'True' %}HOLA <strong>{{ cliente.datos.nombre | upper }} !!</strong>{% endtitulo %}
+				<p>Realiza el pago de tu cuota de afiliado usando</p>
+				<img src="{% static 'sitio/img/isologoVertical.png' %}" alt="">
+				<p>El monto a pagar este mes es de: <h1><strong>${{ cliente.datos.plan.valor }}</strong></h1></p>
+				<form action="{% url 'pagos' %}?pago=True" method="POST">
+  					<script src="https://www.mercadopago.com.ar/integrations/v1/web-tokenize-checkout.js" 
+  					data-summary-product-label="Total Cuotas" 
+  					data-elements-color="#c0392b" 
+  					data-transaction-amount="{{ plan.valor | escape }}">
+  					</script>
+  					 {% csrf_token %}
+				</form>
+				{% else %}
+				{% titulo 'True' %}HOLA <strong>{{ user.username | upper }} !!</strong>{% endtitulo %}
+				<h2>Usted no esta registrado como afiliado de la previsora</h2>
+				<p>Si desea afiliarse por favor realice su solicitud de afiliación</p>
+				<a href="{% url 'afiliacion' %}?plan=False"><button>SOLICITUD</button></a>
+				{% endif %}
+				</div>
+			</div>
+	</div>
+	</div>
+	<div class="rightcolumn">
+		<div class="card">
+			<div class="fakeimg">
+			</div>
+		</div>
+	<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+	</div>			
+</div>
+{% endblock %} 

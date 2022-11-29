@@ -1,0 +1,35 @@
+{% extends 'sitio/index.html' %}
+{% block title %}ALTA{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+	<div class="card">		
+			<div class="form_box">
+			<div class="fakeimg">
+			<div id="centrado">	
+			<div id="titulo"> ALTA DE SOLICITUD </div>
+			<p style="font-size: 12px;">Estas por crear un cliente nuevo, verifica los campos y presiona el botón <strong>"CONFIRMAR"</strong></p>
+			<form method="POST">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button type="submit" >CONFIRMAR</button>
+			</form>
+	  	</div>
+		</div>
+		</div>
+	</div>
+	</div>
+	<div class="rightcolumn">
+		<div class="fakeimg">
+		{% titulo 'True' %}AVISO{% endtitulo %}
+		<div id="centrado">
+		<p>Recuerda que al enviar tu solicitud, tus datos quedaran registrados en nuestros sistemas en espera de la aprobación.</p>
+		<p>Un representante de la previsora se pondrá en contacto con usted, para verificar los datos y informate como finalizar el tramite.</p>
+		<p><h3>Muchas Gracias!!</h3></p>
+		</div>
+		</div>	
+	</div>
+</div>
+{% endblock %} 

@@ -1,0 +1,35 @@
+{% extends 'tienda/base-dash.html' %}
+{% load custom_tags %}
+{% block title %}Inicio{% endblock %}
+{% load static %}
+{% block content %}
+<div class="cardBox">
+	{% if products %}
+			{% for product in products %}
+				{% if product.disponible %}
+				<a href="" style="text-decoration: none;">
+				<div class="card">
+				{% if user.is_superuser %}
+				<a class="btn-editar" href="/administrador/tienda/product/{{ product.id }}/change/"><img src="{% static 'sitio/img/editar.png' %}"/></a>
+				{% endif %}
+				<div class="imgBox">
+				<img src="{% if product.imagen %} {{ product.imagen.url }} {% else %} {% static 'img/No-image-found.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+				</div>
+				<hr style="  display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; margin-right: auto; border-style: inset; border-width: 1px;">
+								<div class="numeros"><strong>ARS$ {{ product.precio }}</strong></div>
+								<div class="cardName">
+											{{ product.nombre }}
+								</div>
+								<div class="catName">{{ category }}</div>
+								<a href="{{ product.get_absolute_url }}"><button class="custom-boton" name="button">VER PRODUCTO</button></a>
+
+				</div>
+				</a>
+				{% endif %}
+			{% endfor %}
+			<div class="card">
+			<div></div>
+			</div>
+{% endif %}
+</div>
+{% endblock %}

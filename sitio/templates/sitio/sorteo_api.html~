@@ -1,0 +1,65 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Sorteo 2020!{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="row">
+	<div class="centercolumn">
+		<div class="card">
+			{% if ganador %}
+			{% titulo 'True' %}GANADOR/A DEL {{ premio_sorteado.nombre | upper }}!!{% endtitulo %}
+			{% else %}
+			{% titulo 'True' %}BIENVENIDOS AL GRAN SORTEO 2021!!{% endtitulo %}
+			{% endif %}
+			<div class="form_box">
+			<div class="fakeimg" style="background-color: #2d487d; color: white;">			
+			<div id="centrado">
+			{% if ganador %}
+			<p><h1>{{ ganador }}</h1></p>
+			{% if num_cupon %}
+			<p>Cupón Numero: <h2>{{ num_cupon }}</h2></p>
+			{% endif %}
+			<p>Afiliado Numero: <h2>{{ num_afiliado }}</h2></p>
+			{% if premio_sorteado.imagen %}
+			<p><img src="{{ premio_sorteado.imagen.url }}" style="width: 200px height: 200px;"></p>
+			{% endif %}
+			{% if cupon %}
+			<iframe src="{{ cupon }}#zoom=80" style="width:100%; height:70%"></iframe>
+			{% endif %}
+			{% else %}
+			<img src="{% static 'sitio/img/sorteo.png' %}" style="widht:40%; height:40%">
+			<p>El premio elegido sera sorteado de forma aleatoria entre los <h1>{{ total_cupones }}</h1> afiliados participantes.</p>
+
+			<p style="font-size: 14px;"><strong>Sortear por numero de afiliado:</strong></p>
+			<form method="POST">
+			{% csrf_token %}
+           <label class="switch"><input type="checkbox" name="x_num_afiliado" value="1"><span class="slider"></span></label>
+			<p><select name="premio" id="premio">
+				{% if premios %}
+				{% for premio in premios %}
+					<option value="{{ premio.nombre }}">{{ premio.orden }}° PREMIO</option>
+				{% endfor %}
+				{% else %}
+  				<option value="1° PREMIO">PRIMER PREMIO</option>
+  				<option value="2° PREMIO">SEGUNDO PREMIO</option>
+  				<option value="3° PREMIO">TERCER PREMIO</option>
+  				<option value="4° PREMIO">CUARTO PREMIO</option>
+  				<option value="5° PREMIO">QUINTO PREMIO</option>
+  				{% endif %}
+  				</select>
+  			</p>
+			<p><h3><strong>Mucha suerte para todos!!!</strong></h3></p>
+  			<p><button class="custom-boton">REALIZAR SORTEO</button></p>
+			{% endif %}
+			</form>
+  			{% if ganador %}
+  			<br>
+  			<p><a href="{% url 'sorteo_api' %}"><button class="custom-boton">VOLVER A SORTEAR</button></a></p>
+			{% endif %}			
+			</div>
+			</div>
+			</div>
+	</div>
+</div>
+			
+{% endblock %}

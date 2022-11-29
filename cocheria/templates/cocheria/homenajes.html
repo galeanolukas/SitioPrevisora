@@ -1,0 +1,131 @@
+  {% extends 'cocheria/index.html' %}
+{% block title %}Homenajes{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="row">
+	{% if obituarios %}
+		{% if obituarios.count >= 1 %}
+		<div class="centercolum" style="background-image: url({% static 'cocheria/img/fondo-sky.jpg' %}); height:auto;">
+			<div class="card" style="background-color: rgba(0 , 0, 0, 0.7); padding:10px; margin:5%; border: 1px solid white; margin-top: 20px;">
+			{% titulo 'True' %}HOMENAJES{% endtitulo %}
+			<div id="centrado"><p style="font-size: 10px; color:white;">Haz click en la imagen para ver</p></div>
+			</div>
+			<div class="card">
+			<script type="text/python" src="{% static 'cocheria/py/slide.py' %}" id="script2" ></script>
+				<div class="con-cajas">
+				
+					{% for obi in obituarios %}
+					<div class="team">
+						<div class="columnas">
+						<div class="cajas">
+						<div id="{{ obi.id }}">
+						<div class="team_member" id="obituario" style="display:table-cell;">
+							{% if user.is_superuser %}
+							<br>
+							<p>
+							<a class="btn-editar" href="{% url 'cocheria:eliminar_obi' ID=obi.id %}" onClick="return confirm('¿Seguro que quieres borrar el obituario de {{ obi.nombre }}?');"><img src="{% static 'cocheria/img/cerrar.png' %}"/></a>
+							<a class="btn-editar" href="{% url 'cocheria:editar_obi' ID=obi.id %}"><img src="{% static 'cocheria/img/editar.png' %}"/></a>
+							</p>
+	  			 			{% endif %}
+	  			 			{% if obi.foto %}
+							<a class="team_img" href="{% url 'cocheria:homenajes' %}?n={{ obi.nombre }}" ><img src="{{ obi.foto.url|safe }}"></a>
+							{% else %}
+							<a class="team_img" href="{% url 'cocheria:homenajes' %}?n={{ obi.nombre }}" ><img src="{% static 'sitio/img/icono-luto.png' %}" alt="Foto de la persona"></a>
+							{% endif %}
+							
+							{% titulo 'True' %}<h1>{{ obi.nombre }}</h1>{% endtitulo %}
+							
+							<p style="font-style: italic; text-align: center;" ><strong>{{ obi.fecha_nac | date:'d M Y'}} / {{ obi.fecha_falle | date:'d M Y'}}</strong></p>				
+						</div>
+						</div>
+						</div>
+					</div>
+					</div>
+					{% endfor %}
+			 </div>
+		</div>
+		</div>
+		<div id="centrado"> 
+		
+		<form method="GET">
+		<input / placeholder="INGRESA NOMBRE U APELLIDO" name="xnombre">
+		<button class="custom-boton">BUSCAR</button>
+		</div>
+		</form>
+		</div>
+		{% else %}
+		<section>
+		<article>
+		<div class="centercolumn" style="background-image: url({% static 'cocheria/img/fondo-sky.jpg' %}); height: auto%; padding-top: 20px;">		
+		<div class="leftcolumn" style="margin-top: 20px;">
+			{% if obituario.foto %}
+			<link href="https://www.previsoradelnorte.com{{ obituario.foto.url }}" rel="image_src"/>
+			{% else %}
+			<link href="https://www.previsoradelnorte.com/static/sitio/img/icono-luto.png" rel="image_src"/> 
+			{% endif %}
+			<div class="team">
+			<div class="team_member" id="obituario", style="display: table; background-color: rgba(0, 0, 0, 0.8); border: 2px solid white;">
+						{% if user.is_superuser %}				
+						<a class="btn-editar" href="{% url 'cocheria:eliminar_obi' ID=obituarios.id %}" onClick="return confirm('¿Seguro que quieres borrar el obituario de {{ obituarios.nombre }}?');"><img src="{% static 'cocheria/img/cerrar.png' %}"/></a>
+						<a class="btn-editar" href="{% url 'cocheria:editar_obi' ID=obituarios.id %}"><img src="{% static 'cocheria/img/editar.png' %}"/></a>
+	  			 		{% endif %}
+	  			 		{% if obituarios.foto %}
+						<a class="team_img" href="{% url 'cocheria:homenajes' %}?n={{ obituarios.nombre }}" ><img src="{{ obituarios.foto.url }}" class="avatar"></a>
+						{% else %}
+						<img class="team_img" src="{% static 'sitio/img/icono-luto.png' %}" class="avatar" alt="Foto de la persona">						
+						{% endif %}
+
+							<h1><strong>{{ obituarios.nombre }}</strong></h1>
+							<p><strong>{{ obituarios.fecha_nac | date:'d M Y'}} / {{ obituarios.fecha_falle | date:'d M Y'}}</strong></p>
+						<aside class="role">
+
+							{% render_post obituarios.texto %}
+
+						</aside>
+			 			<div id="btn-share">
+							<p><h3>Comparte:</h3></p>
+							<!-- facebook -->
+        					<a href="https://www.facebook.com/sharer.php?u=https://www.previsoradelnorte.com{{ request.get_full_path|urlencode }}" target="_blank">
+							<img src="{% static 'cocheria/img/face.png' %}" alt="Facebook" /></a>
+							<!-- Twitter -->
+							<a href="https://twitter.com/share?url=www.previsoradelnorte.com/cocheria/homenajes/?n={{ obituarios.nombre }}&amp;hashtags=#CocheriaSanFrancisoFsa" target="_blank">
+							<img src="{% static 'cocheria/img/tweeter.png' %}" alt="Twitter" /></a>
+							<!-- Whattsapp -->
+							<a href="https://api.whatsapp.com/send?text=www.previsoradelnorte.com{{ request.get_full_path|urlencode }}"><img src="{% static 'cocheria/img/whattsapp.png' %}" alt="Instagram" /></a>
+						</div>
+			</div>
+		</div>
+		</div>					
+		<div class="rightcolumn" style="background-color: rgba(0 ,0, 0, 0.5); color: white; margin-top: 30px;">
+			<div class="form_box">
+			<div id="centrado">
+			<p><h3>Envia tus condolencias o mensajes a la familia.</h3></p>
+			<form class="form_transp" method="POST" action="{% url 'cocheria:homenajes' %}?n={{ obituario.nombre }}">
+			{% csrf_token %}
+			<p>{{ form.nombre }}</p>
+			<p>{{ form.correo }}</p>
+			<p>{{ form.texto }}</p>
+			<button>ENVIAR</button>
+			</form>
+			</div>
+			</div>			
+		</div>
+	</div>
+	</article>
+	</section>			
+	 {% endif %}		
+	{% else %}
+		<div class="centercolumn">
+			<div class="centercolumn" style="background-image: url({% static 'cocheria/img/fondo-homenajes2.jpg' %}); height:auto;">
+				<div class="card" style=" height:100%; background-color: rgba(0 , 0, 0, 0.7); margin-left:20%; margin-right: 20%; border: 1px solid white;">
+				<div id="centrado">
+				<img src="{% static 'sitio/img/logo-previsora.png' %}" class="avatar">
+				<h2 style="color: white;">No hay homenajes cargados....</h2></div>
+				<aside style="color: white;">Este espacio es dedicado para publicar mensualmente pequeños, obituarios u homenajes</aside>
+				</div>		
+			</div>
+		</div>
+	{% endif %}
+</div>
+{% endblock %} 

@@ -1,0 +1,16 @@
+{% extends 'cocheria/index.html' %}
+{% load static %}
+{% block title %}INFO{% endblock %} 
+{% block content %}
+ <div class="row">
+  	<div class="leftcolumn">
+		<div class="card">
+			<div class="fakeimg" style="background-color: lightgrey;">
+				<div id="centrado">
+				{{ msj | safe }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %} 

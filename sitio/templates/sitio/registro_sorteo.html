@@ -1,0 +1,103 @@
+{% extends 'sitio/index.html' %}
+{% block title %}REGISTRO SORTEO {% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="card">
+			<div class="form_box">	
+			{% titulo 'True' %}BIENVENIDO/A <strong>{{ user.username | upper }}!! AL GRAN SORTEO 2022</strong>{% endtitulo %}
+			<div class="fakeimg" style="background-color: #2d487d; color: white;">
+			 
+				{% if resultado %}
+				<div id="centrado">
+				{% if resultado|length == 1 %}
+				<p><strong>PARTICIPA DEL GRAN SORTEO 2022</strong></p><p>Unos <strong>{{ total_cupon.count }}</strong> afiliados ya están participando.</p>
+				<p style="font-size: 14px;">Confirma si tus datos son correctos y completa los campos <strong>"Teléfono/Celular"</strong> y <strong>"Correo Electrónico" (No obligatorio)</strong></p>
+				<p style="font-size: 12px;"><strong>Aviso:</strong> Debes estar al día con los pagos de tu cuotas</p>
+				<form method="POST" action="{% url 'cupon_sorteo' %}">
+  					<p>{{ form_cupon.nombre }}</p>
+  					<p>{{ form_cupon.correo }}</p>
+  					<p>{{ form_cupon.telefono }}</p>
+  					<p>{{ form_cupon.dni }}</p>
+  					<p>{{ form_cupon.numero_afiliado }}</p>
+  					<P style="font-size: 9px;"><strong>Numero de cupón elegido al azar, si desea cambiarlo, introduzca uno comprendido entre {{ rangoi }} y {{ rangof }}</strong></p>
+  					<p style="font-size: 9px;"><strong>al confirmar los datos sera verificado la disponibilidad.</strong></p>
+  					<p>{{ form_cupon.numero_cupon }}</p>
+  					<button>PARTICIPAR</button>
+  					{% csrf_token %}
+				</form>
+				{% else %}
+				<p>Se encontraron los siguientes resultados: <strong>{{ resultado|length }}</strong></p>
+				<p><strong>Selecciona al afiliado haciendo click en el numero de DNI/CUIT/LC</strong></p>
+				<form action="" method="POST">
+				{% csrf_token %}
+				{% for key, afi in resultado.items %}
+				<p>{{ afi.2 }}</p>
+				<input / type="submit" id="data" value="{{ afi.3 |slice:'6:14' }}" name="data">
+				{% endfor %}
+				</form>
+				{% endif %}
+				</div>
+				{% else %}
+					{% if user.is_superuser %}
+						<div id="centrado">
+						<h3>Registra al afiliado y genera el cupón de sorteo</h3>
+						<form method="POST" action="{% url 'cupon_sorteo' %}">
+						<p>{{ form_cupon.nombre }}</p>
+  					   <p>{{ form_cupon.correo }}</p>
+  						<p>{{ form_cupon.telefono }}</p>
+  						<p>{{ form_cupon.dni }}</p>
+  						<p>{{ form_cupon.numero_afiliado }}</p>
+  						<P style="font-size: 12px;"><strong>Numero de cupón elegido al azar, si desea cambiarlo, introduzca uno comprendido entre {{ rangoi }} y {{ rangof }}</strong></p>
+  						<p style="font-size: 12px;"><strong>al confirmar los datos sera verificado la disponibilidad.</strong></p>
+  						<p>{{ form_cupon.numero_cupon }}</p>
+						<button>REGISTRAR</button>
+  						{% csrf_token %}
+						</form>
+						</div>
+					{% else %}
+					<div id="centrado">
+					<img src="{% static 'sitio/img/GrillaPremios.png' %}" alt="" style="">
+					<form action="" method="POST">
+	 				{% csrf_token %}
+	 				<h4><strong>OBTENÉ TU CUPÓN PARA PARTICIPAR</strong></h4>
+					<p style="font-size: 12px;">Ingresa <strong>N° Afiliado / DNI / CUIL</strong> y presiona <strong>"SIGUIENTE"</strong>.</p>
+					{% if num_afiliado %}
+					<input style="text-align:center;" name="data" placeholder="ESCRIBA AQUÍ SU DATO" id="data" value="{{ num_afiliado }}"/>
+					{% else %}
+					<input style="text-align:center;" name="data" placeholder="ESCRIBA AQUÍ SU DATO" id="data"/>
+					{% endif %}
+					{% if msj %}
+						{{ msj | safe }}
+					{% endif %}
+					<p><button>SIGUIENTE</button></p>
+	 				</form>					
+					</div>
+					{% endif %}
+				{% endif %}
+			</div>
+			</div>
+		</div>
+	</div>
+	<div class="rightcolumn">
+		<div class="card">
+			<div class="fakeimg"style="background-color: #2d487d; color: white;">
+			<div id="centrado">
+			{% titulo 'True' %}COMO PARTICIPAR?{% endtitulo %}
+			<p><strong>Genera tu cupón del sorteo siguiendo estos tres sencillos pasos:</strong></p>
+			<p><strong>1)</strong> Ingresa tu numero de afiliado, DNI o CUIT en el campo de búsqueda.</p>
+			<p><strong>2)</strong> Completa o rellena los campos libres obligatorios (*) y presiona siguiente.</p><p style="font-size: 11px;">( Si ingresa su email, el cupón sera enviado a su casilla de correo )</p>
+			<p><strong>3)</strong> Descarga o imprime tu cupón generado.</p>
+			</div>
+			</div>
+		</div>
+	<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+	</div>	
+</div>
+{% endblock %}

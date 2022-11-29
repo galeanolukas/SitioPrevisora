@@ -1,0 +1,71 @@
+{% load static %}
+{% load custom_tags %} 
+<html>
+<head>
+	<title>Cocheria San Francisco Fsa | {% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'cocheria/css/estilo-cocheria.css' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="{% static 'cocheria/js/brython.js' %}"></script>
+   <script type="text/javascript" src="{% static 'cocheria/js/brython_stdlib.js' %}"></script>
+</head>
+<body onload="brython()" >
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v7.0" nonce="n05zux6r"></script>
+	<div class="contenedor" id="contenedor">
+		<div class="navbar" id="Barra">
+  			<a class="active" href="{% url 'cocheria:home' %}">INICIO</a>
+ 			<a href="{% url 'cocheria:mostrar' %}?search=Nosotros">NOSOTROS</a>
+			<a href="{% url 'cocheria:servicios' %}">SERVICIOS</a>
+			<a href="{% url 'cocheria:mostrar' %}?search=Noticias">NOTICIAS</a>
+			<a href="{% url 'cocheria:homenajes' %}?n=all">HOMENAJES</a>
+			<a href="{% url 'cocheria:contacto' %}">CONTACTO</a>
+			<a href="{% url 'clientes' %}">AFILIADOS</a>
+  			<a href="{% url 'home' %}" >LA PREVISORA</a>
+  			<a style="font-size:20px;" class="icon" onclick="MostrarMenu()">&#9776;</a>
+  			{% if user.username %}
+  				<a class="login" href="{% url 'cocheria:salir' %}" onClick="return confirm('¿Seguro que quieres cerrar sesion?');"><img src="{% static 'cocheria/img/User-cerrar.png' %}"/></a>
+				<a class="login" href="{% url 'cocheria:panel' %}">{{ user.username }}</a>
+			{% else %}
+  						<a class="login" href="{% url 'cocheria:panel' %}">Ingresar <img src="{% static 'cocheria/img/User.png' %}"/></a>
+			{% endif %}
+		</div>
+		<div class="contenido" id="contenido" style="background-color: lightgray;">
+		<div class="cabecera" style="background-image: url({% static 'cocheria/img/Banner3.png' %});"><br>
+			{% titulo 'True' %}<h1 style="font-family: BirdsofParadise;">COCHERIA SAN FRANCISCO</h1>{% endtitulo %}		 
+		</div>
+			{% block content %}
+
+			{% endblock %}
+			<script type="text/python" src="{% static 'cocheria/py/w-button.py' %}" id="script1"></script>
+				<div class='flotante-whattsapp'>
+					<button id="bot-whattsapp"><img src="{% static 'cocheria/img/24hs.png' %}" border="0"/><strong></strong>
+	    				<span id="info-num">
+	    				<strong>
+	    				<p><a href="https://api.whatsapp.com/send?phone=+543704278890" target="blank"> 370-4278890</a></p>
+	    				</strong>
+	    				<br>	
+	    			</span>	
+					</button>
+				</div>
+	<script type="text/javascript" src="{% static 'cocheria/js/menu.js' %}"></script> 
+			<footer>
+			<div class="pie" id="pie">
+				<hr>	
+			<div class="share-iconos">
+				<strong>Visita nuestras redes:</strong><br><br>
+				<a href="https://www.facebook.com/laprevisoradelnorte" target="blank"><img src="{% static 'cocheria/img/face.png' %}"></a>
+				<a href="" ><img src="{% static 'cocheria/img/tweeter.png' %}" alt=""></a>
+				<a href="https://www.instagram.com/cocheriasanfrancisco/?hl=es" ><img src="{% static 'cocheria/img/instagram.png' %}" alt=""></a>
+			</div>
+			<p>COCHERIA SAN FRANCISCO<br><br></p>
+			<div class="direccion-bottom"><img src="{% static 'cocheria/img/ubica-icono.png' %}" style="width: 30px; height: 30px;" /><a href="https://goo.gl/maps/Ai88yPcmuJ3Uj5fK8" target="blank"> España 441 - Formosa, Argentina</a>
+  			</div>
+  			<br>
+  			<hr>
+  			<p class="fondo_de_pie"><strong>Desarrollado por:</strong> <a href="mailto:galeanolukas@gmail.com" style="text-decoration:none; color:white;">galeanolukas@gmail.com</a> <strong>Copyleft <span class="copyleft">&copy;</span> {% now 'Y' %}</strong></p>
+			</div>
+			</footer>
+		</div>
+</div>
+</body>
+</html>

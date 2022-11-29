@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+{% extends 'panel/panel.html' %}
+{% load static %}
+{% block title %}Registros de {{ estado}}{% endblock %}	
+<!-- Block principal -->
+{% block principal %}
+{% if resultado %}
+<div id="centrado">
+		<div id="titulo">Datos
+		{% if estado == 'afiliados' %}
+		del Afiliado
+		{% elif estado == 'solicitudes' %}
+		de la Solicitud
+      {% elif estado == 'pagos' %}
+      de Pagos
+		{% else %}
+		del Usuario
+		{% endif %}
+		</div>
+</div>
+{% include 'panel/registros.html'  %}
+<div id="centrado">
+			{% if estado == 'afiliados' %}
+		  <a href="{% url 'panel:editar_r'  tp='afiliado' ID=resultado.id %}" >
+		  	<button class="custom-boton">Editar <ion-icon name="create-outline"></ion-icon></button></a>
+		  	{% if resultado.datos.correo %}
+		   <a href="{% url 'panel:enviar_mail' tp='afiliado' ID=resultado.id %}" >
+		  	<button class="custom-boton">Mensaje <ion-icon name="mail-outline"></ion-icon></button></a>
+		  	{% endif %}
+		  <a href="{% url 'panel:eliminar_r' tp='afiliado' ID=resultado.id %}">
+		  <button class="custom-boton">Eliminar <ion-icon name="trash-outline"></ion-icon></button></a>
+		  {% elif estado == 'solicitudes' %}
+			<a href="{% url 'panel:editar_r' tp='solicitud' ID=resultado.id %}">
+		  	<button class="custom-boton">Editar <ion-icon name="create-outline"></ion-icon></button></a>
+		  	{% if resultado.correo %}
+		  <a href="{% url 'panel:enviar_mail' tp='solicitud' ID=resultado.id %}" >
+		  	<button class="custom-boton">Mensaje <ion-icon name="mail-outline"></ion-icon></button></a>
+		  	{% endif %}
+		  <a href="{% url 'panel:eliminar_r' tp='solicitud' ID=resultado.id %}">
+		  <button class="custom-boton">Eliminar <ion-icon name="trash-outline"></ion-icon></button></a>
+		  {% if resultado.aprobada %}
+		  <a href="">
+		  <button class="custom-boton">Baja</button></a>
+			{% else %}
+			<a href="">
+		  <button class="custom-boton">Alta</button></a>
+			{% endif %}	  
+		  {% else %}
+		  <a href="{% url 'panel:editar_r' tp='usuario' ID=resultado.id %}">
+		  <button class="custom-boton">Editar <ion-icon name="create-outline"></ion-icon></button></a>
+		  {% if resultado.email %}
+		   <a href="{% url 'panel:enviar_mail' tp='usuario' ID=resultado.id %}" >
+		  	<button class="custom-boton">Mensaje <ion-icon name="mail-outline"></ion-icon></button></a>
+		  	{% endif %}
+		  <a href="{% url 'panel:eliminar_r' tp='usuario' ID=resultado.id %}">
+		  <button class="custom-boton">Eliminar <ion-icon name="trash-outline"></ion-icon></button></a>
+		  {% endif %}
+</div>
+{% else %}
+{% if form %}
+			<div class="form_box">
+			<div id="centrado">
+			<div id="titulo">CARGAR {{ estado | upper }}</div></div>
+			<div id="centrado">
+			<p style="font-size: 10px;">Los campos marcados con "*" son obligatorios.</p>
+			<br>
+			<form action="{% url 'panel:editar_r' tp='solicitud' ID=0 %}" method="POST">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button>GUARDAR</button>
+			</form>
+			</div>
+			</div>
+{% else %}
+		<div class="fakeimg">
+		<div id="centrado">
+				<h3>LISTA DE {% if estado == 'afiliados' %}AFILIADOS{% elif estado == 'solicitudes' %}SOLICITUDES{% else %}USUARIOS{% endif %}</h3>
+				<p style="font-size: 12px">En la lista de resultados tendrás opciones: <strong>editar o borrar.</strong></p>
+				<p>Esta lista ya es de afiliados activos</p>
+				<br>
+				<a href=""><button class="custom-boton"><ion-icon name="add-outline"></ion-icon>NUEVO AFILIADO</button></a>
+		</div>
+		</div>
+{% endif %}
+{% endif %}
+{% endblock %}
+<!-- Block lateral -->
+{% block lateral %}
+  		   		<div id="centrado">
+					<div id="titulo">Total de resultados: <strong>{{ resultados.count }}</strong></div>
+					</div>
+<div class="fakeimg" style="height: 400px; overflow-y: auto;">
+{% if resultados %}
+					<table>
+					<tr>
+					{% if estado == 'afiliados' or estado == 'solicitudes' %}
+						<th style=" text-align: center; padding: 6px;">Nombre y apellido</th>
+	  					<th style=" text-align: center; padding: 6px;">Usuario solicitante</th>
+	  					<th style=" text-align: center; padding: 6px;">Estado</th>
+	  				{% elif estado == 'pagos' %}
+	 					<th style=" text-align: center; padding: 6px;">Afiliado/Usuario</th>
+	  					<th style=" text-align: center; padding: 6px;">Cobrador</th>
+	  					<th style=" text-align: center; padding: 6px;">Monto</th> 				
+      			{% else %}
+      				<th style=" text-align: center; padding: 6px;">Usuario</th>
+	  					<th style=" text-align: center; padding: 6px;">Rol</th>
+	  					<th style=" text-align: center; padding: 6px;">Estado</th>
+      			{% endif %}
+      			</tr>	
+	  				{% for cliente in resultados %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					{% if estado == 'afiliados' or estado == 'solicitudes' %}
+					{% if estado == 'afiliados' %}
+					<a style="text-decoration: none;" href="{% url 'panel:ver_r' tp='afiliados' %}?id={{ cliente.id }}">
+					{{ cliente.datos.nombre }} {{ cliente.datos.apellido }}
+					</a>
+					{% else %}
+					<a style="text-decoration: none;" href="{% url 'panel:ver_r' tp='solicitudes' %}?id={{ cliente.id }}">
+					{{ cliente.nombre }}
+					</a>
+					{% endif %}
+					{% elif estado == 'pagos' %}
+					<a style="text-decoration: none;" href="{% url 'panel:ver_r' tp='pagos' %}?id={{ cliente.id }}">
+					{{ cliente.categoria.nombre }}
+					</a>
+					{% else %}
+					<a style="text-decoration: none;" href="{% url 'panel:ver_r' tp='usuarios' %}?id={{ cliente.id }}">
+					{{ cliente.username }}
+					</a>
+					{% endif %}
+					</td>
+					
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;" href="{% url 'panel:ver_r' tp='usuarios' %}?id={{ cliente.usuario.id }}">
+					{% if estado == 'afiliados' or estado == 'solicitudes' %}
+					{% if estado == 'afiliados' %}
+					{{ cliente.usuario.username }}
+					{% else%}
+					{{ cliente.usuario.username }}
+					{% endif %}
+					</a>
+					{% else%}
+					{% if cliente.is_staff %}<a style="color: var(--azul);">Staff {% if cliente.rol %}True{% endif %}</a><a>{% else %}Usuario{% endif %}
+					{% endif %}
+					</a>
+					</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					{% if estado == 'afiliados' or estado == 'solicitudes' %}
+					{% if estado == 'solicitudes' %}
+					{% if  cliente.aprobada %}<a style="color: green;">Aprobada</a>{% else %}<a style="color: red;">Pendiente</a>{% endif %}
+					{% else %}
+					{% if cliente.activo %}<a style="color: green;">Activo</a>{% else %}<a style="color: red;">Pendiente</a>{% endif %}
+					{% endif %}
+					{% else %}
+					{% if cliente.is_active %}
+					<a style="color: green;">Activo</a>
+					{% elif estado == 'pagos' %}
+						<strong>$ {{ cliente.valor }}</strong>
+					{% else %}
+					<a style="color: red;">Inactivo</a>
+					{% endif %}
+					{% endif %}
+					</td>					
+					</tr>
+	  				{% endfor %}
+  		   		</table>
+{% else %}
+					<div id="centrado">
+					<p><h2>No hay resultados encontrados.!</h2></p>
+					<p>Realiza una nueva búsqueda, completando el campo a tu derecha.</p>
+					</div>
+{% endif %}
+</div>
+{% endblock %}

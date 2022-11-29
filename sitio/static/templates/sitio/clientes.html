@@ -1,0 +1,51 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Panel Cliente{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		{% if user.username %}
+			<div class="card">
+				<div class="fakeimg">
+				{% titulo 'True' %}BIENVENIDO/A {{ user.username | upper }}{% endtitulo %}
+				<div id="centrado">
+					<img src="{% static 'sitio/img/gestiononline.jpg' %}" alt="">
+					<p>Estas son las opciones de navegación disponibles para vos.</p>
+				   <div class="panel-contenedor">
+					<div><a href="{% url 'mostrar' %}?search=QUE NECESITO?">VER REQUISITOS</a></div>
+					<div><a href="{% url 'calcular' %}">CONSULTAR PLANES</a></div>
+					<div><a href="{% url 'afiliacion' %}?plan=False">SOLICITAR AFILIACIÓN</a></div>
+					<div><a href="{% url 'consulta' %}" >CONSULTAR AFILIADOS</a></div>
+					<div><a href="{% url 'pagos' %}" >PAGAR ONLINE</a></div>
+					<div><a href="" >SOLICITAR BAJA</a></div>
+				   </div>
+				</div>
+			 </div>
+		  </div>
+		{% else %}
+			<div class="card">
+				<div class="fakeimg">
+				{% titulo 'True' %}BIENVENIDO CLIENTE{% endtitulo %}
+				<div id="centrado">
+					<img src="{% static 'sitio/img/gestiononline.jpg' %}" alt="">
+					<p>En esta zona encontraras disponibles algunas opciones de gestión online</p>
+					<p><h2>*Consultas<br>*Solicitud<br>*Pagos<br>*Requisitos<br>*Acceso a compras</h2></p>
+					<p>Si usted todavía no ha ingresado haga click aquí <a href="{% url 'login' %}">Ingresar</a>, o bien si desea registrarse haga click en el siguiente botón.</p>
+					<p>Una vez registrado vuelva a ingresar a esta sección <strong>"CLIENTES"</strong> después de loguearse para poder ver las opciones disponibles.</p>
+					<br>
+					<a href="{% url 'registro' %}" ><button class="custom-boton">REGISTRATE</button></a>
+				</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	<div class="rightcolumn">
+		<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

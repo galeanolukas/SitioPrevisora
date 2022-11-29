@@ -1,0 +1,27 @@
+{% extends 'sitio/index.html' %}
+{% block title %}PANEL CLIENTE{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="form_box">
+			<div class="fakeimg">
+		{% titulo 'True' %}USUARIOS REGISTRADOS{% endtitulo %}
+		<table border="0.5"  width="100%" height="auto">
+  			{% for usuario in usuarios %}
+			<tr>
+				<td align="center">{{ usuario.username }}</td>
+				<td align="center">{{ usuario.email }}</td>
+				<td align="center"><a href="#"><button>ESCRIBIR</button></a></td>
+			</tr>
+  		{% endfor %}
+  		</table>
+  			</div>
+		</div> 	
+	</div>
+	<div class="rightcolumn">
+	
+	</div>
+</div>
+{% endblock %}

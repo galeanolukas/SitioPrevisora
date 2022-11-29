@@ -1,0 +1,13 @@
+{% extends 'cocheria/index.html' %}
+{% block title %}Nosotros{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="contenido">
+	<div id="centrado">
+		{% titulo 'True' %}COCHERIA SAN FRANCISCO FORMOSA{% endtitulo %}
+		
+	</div>
+</div>
+
+{% endblock %}

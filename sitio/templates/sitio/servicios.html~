@@ -1,0 +1,15 @@
+{% extends 'cocheria/index.html' %}
+{% block title %}SERVICIOS{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="row">
+	<div class="centercolumn">
+		{% titulo 'True' %}SERVICIOS{% endtitulo %}
+		<div id="centrado">
+		<p>Contamos con una amplia gama de servicios para brindarles</p>
+	
+		</div>
+	</div>
+</div>
+{% endblock %} 

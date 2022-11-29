@@ -1,0 +1,80 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Cupon Pagos{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+			<div class="form_box">	
+				<div class="fakeimg">
+				<div id="centrado">
+				{% if clientes %}
+				{% titulo 'True' %}HOLA <strong>{{ user.username | upper }} !!</strong>{% endtitulo %}
+				<p>Este es tu cupón de pagos</p>
+				<table style="overflow-x:auto; border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+					<tr>
+						<th style=" text-align: center; padding: 8px;">Afiliado</th>
+      				<th style=" text-align: center; padding: 8px;">Valor Cuota</th>
+      			</tr>	
+				{% for cli in clientes %}
+				   <tr>
+					<td align="center" style=" text-align: center; padding: 8px;">{{ cli.datos.nombre }}, {{ cli.datos.apellido }}</td>
+					<td align="center" style=" text-align: center; padding: 8px;">${{ cli.monto }}</td>
+					</tr>
+				{% endfor %}
+				</table>
+				<table style="overflow-x:auto; background-color:lightgrey; border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+					<tr>
+						<th style=" text-align: center; padding: 8px;"><h4>TOTAL</h4></th>
+						<th style=" text-align: center; padding: 8px;"><h4>${{ monto_total }}</h4></th>
+				</table>
+				<p style="font-size: 12px;">A partir de 4 clientes solicitados desde tu cuenta, abonaras el total con un descuento del: <strong><h2>30%</h2></strong></p>
+				<p>El monto total a pagar este mes es de: <h1><strong>$ <input style="text-align:center; width: 50%;" readonly="readonly" type="number" name="valor-total" value="{{ total_a_pagar }}"></strong></h1></p>
+				<p style="font-size: 10px;"><strong>El valor que figura aquí es calculado sobre la suma de las cuotas y los descuentos aplicados.</strong></p>
+				<p><img src="{% static 'sitio/img/isologoVertical.png' %}" alt=""></p>
+				<form method="POST">
+  					<script src="https://www.mercadopago.com.ar/integrations/v1/web-tokenize-checkout.js" 
+  					data-public-key="TEST-17963eb2-63ee-4a81-b776-55aecc8bb0a7"; 
+  					data-elements-color="#c0392b"; 
+  					data-transaction-amount="{{ total_a_pagar }}";>
+  					</script>
+  					{% csrf_token %}
+				</form>
+				{% else %}
+				{% titulo 'True' %}HOLA <strong>{{ user.username | upper }} !!</strong>{% endtitulo %}
+				<h2>Esta cuenta de usuario no registra afiliados asociados en el sistema</h2>
+				<p>Puede realizar una búsqueda mas específica del cupón de pagos, ingresando el numero de <strong>DNI</strong>, 
+				en el cuadro del búsqueda disponible en el lateral derecho de su pantalla.</p>
+				<p>Si usted ya es afiliado a la previsora por favor contáctenos para dar solución a su problema</p>
+				<p>Si desea ser un afiliado, por favor realice su solicitud haciendo click en el siguiente botón.</p>
+				<a href="{% url 'afiliacion' %}?plan=False"><button>SOLICITUD</button></a>
+				{% endif %}
+				</div>
+			</div>
+	</div>
+	</div>
+	<div class="rightcolumn">
+	<div class="card">
+		<div class="form_box">
+			<div class="fakeimg">
+ 			<div id="centrado">
+	 		<form action="{% url 'pagos' %}" method="GET">
+			<p><strong>BUSCAR CUPÓN</strong></p>
+			<img src="{% static 'sitio/img/icono-lupa.png' %}" alt="Buscar cupón">
+			<p>Ingresa el numero de <strong>DNI</strong> para buscar el cupón de pago especifico.</p>
+			<input name="dni" placeholder="INGRESA DNI" id="buscar_dni"/>
+			<button>BUSCAR</button>
+	 		</form>		
+			</form>
+			</div>
+			</div>	
+		</div>
+	</div>
+	<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+	</div>			
+</div>
+{% endblock %} 

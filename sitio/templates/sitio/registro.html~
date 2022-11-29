@@ -1,0 +1,61 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Registro{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+<div class="leftcolumn">
+	<div class="card">
+		<div id="centrado">			
+			<div class="form_box">
+			<div id="titulo">REGISTRATE</div>
+			<div class="fakeimg" style="background-color: #2d487d; color: white;">
+			
+			<form action="" method="POST">
+			{% csrf_token %}
+				{% if form.errors %}
+					<div id="myModal" class="modal" style="display: block;">
+  					<div class="modal-content">
+  					<span class="cerrar">&times;</span>
+  						<div class="fakeimg" style="font-size: 16px; color: white;">
+    						<p><span style="color: yellow; font-size: 10px; text-decoration: none;">{{ form.errors }}</span></p>
+    					</div>
+    					<br>
+    			   </div>
+    			</div>
+				{% endif %} 
+				<label><strong>{{ form.username.label_tag }}</strong></label>
+				<p style="font-size: 12px;">Elija un nombre de usuario fácil de recordar Ejem: <strong>miguel01</strong><br>utiliza solo letras minúsculas</p> 
+				<p>{{ form.username }}</p>
+				<label><strong>{{ form.email.label_tag }}</strong></label>
+				<p>{{ form.email }}</p>
+				<label><strong>{{ form.password1.label_tag }}</strong></label> 
+  				<p style="font-size: 10px;">La contraseña elegida debe contener al menos 6 caracteres, combine números, símbolos y letras.</p> 
+				<p>{{ form.password1 }}</p>
+				<label><strong>{{ form.password2.label_tag }}</strong></label> 
+				<p>{{ form.password2 }}</p>
+       		
+			<button type="submit">REGISTRAR</button>
+			</form>
+	  		</div>
+	  		</div>
+	  </div>
+	</div>
+</div>
+<div class="rightcolumn">
+	<div class="card">
+		<div class="fakeimg">
+		{% titulo 'True' %}AVISO{% endtitulo %}
+		<div id="centrado">
+		<p>Al completar el <strong>formulario de registro</strong> podrás acceder a las opciones de gestión en linea</p>
+		</div>		
+		</div>
+	</div>
+	<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+</div> 
+</div>
+{% endblock %}  

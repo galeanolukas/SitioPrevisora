@@ -1,0 +1,81 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Servicios Sociales{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="leftcolumn">
+  <div class="central">
+ 	<div class="card">
+  	  <script type="text/python" src="{% static 'sitio/scripts/slide.py' %}" id="script3" ></script>
+      <div class="slides" id="slides">
+      	{% if imagenes %}
+      	{% for img in imagenes %}
+				<a href="{% url 'mostrar' %}?search={{ img.titulo }}" >
+					<div class="slide-boton" style=" display: none;">
+					<img src="{{ img.imagen.url }}" alt="" style="width: 100%;">
+					</div>
+				</a>	
+			{% endfor %}
+			{% else %}
+			{% endif %}
+		</div>
+	</div>
+	 {% if principal %} 
+  	 {% for contenido in principal %}
+  <div class="card">
+    	<div class="fakeimg">
+    	{% if user.is_superuser %}
+			<a class="btn-editar" href="{% url 'eliminar' ID=contenido.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ contenido.titulo }}?');"><img src="{% static 'sitio/img/cerrar.png' %}"/></a>
+			<a class="btn-editar" href="{% url 'editar' ID=contenido.id %}"><img src="{% static 'sitio/img/editar.png' %}"/></a>
+		{% endif %}
+		{% if contenido.titulo %}
+      	<a href="{% url 'ver' %}?search={{ contenido.id }}" style="text-decoration: none;">{% titulo 'True' %}{{ contenido.titulo }}{% endtitulo %}</a>
+      {% endif %}
+      {% if contenido.imagen %}
+      {% if contenido.mostrar_img %}
+      {% imagen %}{{ contenido.imagen.url }}{% endimagen %}
+      {% endif %}
+      {% endif %}
+      {% render_post contenido.texto %}
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    	<div id="centrado">
+    	<img src="{% static 'sitio/img/under.jpeg' %}" alt="">
+    	<p><strong>Sitio en construccion</strong></p>
+    	</div>
+    {% endif %}
+ </div>
+  <div class="rightcolumn">
+  	  {% if lateral %}
+     {% for cont in lateral %}
+    	<div class="card">
+    		<div class="fakeimg">
+	  {% if user.is_superuser %}
+			<a class="btn-editar" href="{% url 'eliminar' ID=cont.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ cont.titulo }}?');"><img src="{% static 'sitio/img/cerrar.png' %}"/></a>
+			<a class="btn-editar" href="{% url 'editar' ID=cont.id %}"><img src="{% static 'sitio/img/editar.png' %}"/></a>
+			<br>
+	  {% endif %}
+     {% titulo 'True' %}{{ cont.titulo }}{% endtitulo %}	
+     {% if cont.imagen %}
+     {% if cont.mostrar_img %}
+     		<div id="centrado">
+     		{% imagen 'True' %}{{ cont.imagen.url }}{% endimagen %}
+     		</div>
+     {% endif %}
+     {% endif %}
+     {% render_post cont.texto %}	
+			</div>
+    	</div>
+    {% endfor %}
+    {% else %}
+    	<div class="card">
+    		<div class="fakeimg">
+    		<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>
+    		</div>
+    	</div>
+    {% endif %}
+  </div>
+ </div>
+{% endblock %}

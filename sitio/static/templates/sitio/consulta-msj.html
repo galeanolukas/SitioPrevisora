@@ -1,0 +1,69 @@
+{% extends 'sitio/index.html' %}
+{% block title %}SEARCH{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="card">
+			<div class="form_box">	
+				{% titulo 'True' %}MENSAJES DE CONTACTOS{% endtitulo %}
+				<div id="centrado">
+				<img src="{% static 'sitio/img/mail.png' %}" alt="Imagen mail">
+				</div>
+				<div class="fakeimg" style="height: 50%; overflow-y: auto;">
+				{% if mensajes %}
+					<table style="overflow-x:auto;   border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Nombre y Apellido</th>
+      				<th style=" text-align: center; padding: 6px;">Correo</th>
+      				<th style=" text-align: center; padding: 6px;">Teléfono</th>
+      				<th style=" text-align: center; padding: 6px;">Fecha°</th>
+      				<th style=" text-align: center; padding: 6px;">Accion°</th>
+      			</tr>	
+	  				{% for msj in mensajes %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ msj.nombre }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+							<a style="text-decoration: none;" href="mailto:{{ msj.email }}">{{ msj.email }}</a>
+					</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=+54{{ msj.numero }}">{{ msj.numero }}</a>
+					</td>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ msj.fecha|date:"SHORT_DATE_FORMAT" }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a id="BtnModal"><button class="custom-boton" style="font-size: 12px;">VER</button></a>
+					<div id="myModal" class="modal">
+  						<div class="modal-content">
+  						<div class="fakeimg" style="font-size: 16px; color: white;">
+    					<span class="cerrar">&times;</span>
+    					{{ msj.texto|safe }}
+    					<br>
+    					<button class="custom-boton">RESPONDER</button>
+    					</div>
+    					</div>
+    					<script type="text/javascript" src="{% static 'sitio/js/modal.js' %}"></script>
+    				</div>
+    				</td>		
+					</tr>
+	  				{% endfor %}
+  		   		</table>
+				{% else %}
+					<div id="centrado">
+					<p><h2>No hay mensajes nuevos !</h2></p>
+					<p>Realiza una nueva búsqueda, completando el campo a tu derecha.</p>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	</div>
+ 	<div class="rightcolumn">
+ 		<div class="card">
+ 		<div class="form_box">
+ 			<div class="fakeimg">
+			</div>
+		</div>
+		</div>
+	 </div>
+</div>
+{% endblock %}

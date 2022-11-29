@@ -1,0 +1,21 @@
+{% extends 'panel/panel.html' %}
+{% block title %}AVISOS{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block principal %}
+			<div class="form_box">
+			<div id="centrado">
+			{% titulo 'True' %}AVISO{% endtitulo %}
+			<img src="{% static 'sitio/img/mail.png' %}"/>
+			<p><h3>{{ destinatario }}</h3></p>
+        	<br>
+			<form method="POST">
+				<p>{{ form.titulo }}</p>
+				<p>{{ form.entrada }}</p>
+				{% csrf_token %}
+				<br>
+				<button class='custom-boton' type="submit">ENVIAR</button>
+			</form>
+			</div>
+	  		</div>
+{% endblock %} 

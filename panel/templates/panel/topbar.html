@@ -1,0 +1,24 @@
+{% load static %}
+<div class="topbar">
+				<div class="toggle">
+				<ion-icon name="menu-outline"></ion-icon>
+				</div>
+				<div class="titulo-user"><strong>{{ user.username | upper }}</strong> <p style="font-size: 10px;">{{ hoy | date:'D, d M  Y' }}</p></div>
+				<div class="search">
+				<form method="POST">
+				{% csrf_token %}
+				<input type="text" placeholder="Buscar aqui"/ name="{{ name_search }}">
+				<label type="submit">
+				<ion-icon name="search-circle-outline"></ion-icon>
+				</label>
+				</form>
+				</div>
+				{% if user.is_staff %}
+				<a href="#notif1">
+				<div class="notif-bell" href="#notif1">
+				<div class='num'>{{ notifs.count }}</div>
+				<ion-icon name="notifications-outline"></ion-icon>
+				</div>
+				</a>
+				{% endif %}
+</div>

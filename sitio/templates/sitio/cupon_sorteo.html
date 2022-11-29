@@ -1,0 +1,104 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Gran Sorteo 2020{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="card">
+			<div class="form_box">	
+				<div class="fakeimg" style="background-color: #2d487d; color: white;">
+				<div id="centrado">
+				{% if user.username %}
+				{% titulo 'True' %}HOLA <strong>{{ user.username | upper }} !!</strong>{% endtitulo %}
+				<p>Completa tu cupón para participar al <strong>GRAN SORTEO 2020</strong></p><p>Unos <strong>{{ total_cupon.count }}</strong> afiliados ya están participando.</p>
+				<p style="font-size: 14px;"><strong>Aviso:</strong> Debes estar al día con los pagos de tu cuotas</p>
+				<p style="font-size: 12px;"><strong>El * indica los campos obligatorios</strong></p>
+				<form method="POST">
+  					<p>{{ form_cupon.nombre }}</p>
+  					<p>{{ form_cupon.correo }}</p>
+  					<p>{{ form_cupon.telefono }}</p>
+  					<p>{{ form_cupon.numero_afiliado }}</p>
+  					<P style="font-size: 12px;"><strong>Numero de cupón elegido al azar, si desea cambiar recargue la pagina o introduzca uno comprendido entre {{ rangoi }} y {{ rangof }}</strong></p>
+  					<p style="font-size: 12px;"><strong>al confirmar los datos sera verificado la disponibilidad.</strong></p>
+  					<p>{{ form_cupon.numero_cupon }}</p>
+  					<button>PARTICIPAR</button>
+  					{% csrf_token %}
+				</form>
+				{% else %}
+				{% titulo 'True' %}GRAN SORTEO 2020!!{% endtitulo %}
+				<h2>Debes ingresar para obtener el cupón de participación al sorteo</h2>
+				<p><a style="font-size: 40px; text-shadow: 2px 2px black;"><strong>{{ total_cupon.count }}</strong></a><br><a style="font-size: 20px; text-shadow: 2px 2px black">Afiliados ya tienen su cupón!</a></p>
+				<p>Que esperas para generar el tuyo?<p>
+				<p>Si eres un afiliado y tu cuenta esta al día, ingresa haciendo click <a href="{% url 'login' %}?next=/clientes/sorteos/" >aquí</a> y en el panel de clientes elige la opción <strong>"PARTICIPA DEL SORTEO"</strong></p> 
+				<p>Si deseas ser un afiliado a la previsora y no estas registrado, por favor no pierdas tiempo y enviá tu solicitud haciendo click en el siguiente botón.</p>
+				<a href="{% url 'registro' %}"><button>REGISTRATE</button></a>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+	 </div>
+	 {% if post_premios %}
+	 {% for post in post_premios %}
+	 <div class="card">
+			<div class="form_box">	
+				<div class="fakeimg">
+							{% if user.is_superuser %}
+					<a class="btn-editar" href="{% url 'eliminar' ID=post.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ cont.titulo }}?');"><img src="{% static 'sitio/img/cerrar.png' %}"/></a>
+					<a class="btn-editar" href="{% url 'editar' ID=post.id %}"><img src="{% static 'sitio/img/editar.png' %}"/></a>
+					<br>
+			{% endif %}
+				{% titulo 'True' %}{{ post.titulo }}{% endtitulo %}
+            {% if post.imagen %}<img src="{{ post.imagen.url }}" alt="Imagen">{% endif %}
+				{% render_post post.texto %}				
+				</div>
+			</div>
+	 </div>
+	 {% endfor %}
+	 {% else %}
+	 <div class="card">
+			<div class="form_box">	
+				<div class="fakeimg">
+				<div id="centrado">
+					<h3>Aca va el Post de premios..</h3>
+				</div>				
+				</div>
+			</div>
+	 </div>
+	 {% endif %}
+	</div>
+	<div class="rightcolumn">
+	{% if post_bases %}
+	{% for post in post_bases %}
+	<div class="card">
+		<div class="form_box">
+			<div class="fakeimg">
+				{% if user.is_superuser %}
+					<a class="btn-editar" href="{% url 'eliminar' ID=post.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ cont.titulo }}?');"><img src="{% static 'sitio/img/cerrar.png' %}"/></a>
+					<a class="btn-editar" href="{% url 'editar' ID=post.id %}"><img src="{% static 'sitio/img/editar.png' %}"/></a>
+			   {% endif %}
+			   <br>
+				{% titulo 'True' %}{{ post.titulo }}{% endtitulo %}
+				{% if post.imagen %}<img src="{{ post.imagen.url }}" alt="Imagen">{% endif %}
+				{% render_post post.texto %}
+			</div>	
+		</div>
+	</div>
+	{% endfor %}
+	{% else %}
+	<div class="card">
+		<div class="form_box">
+	 		<div id="centrado">
+ 				<h3>Aca va el Post de Bases y Condiciones...</h3>
+			</div>
+		</div>
+	</div>
+   {% endif %}
+	<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+	</div>			
+</div>
+{% endblock %}

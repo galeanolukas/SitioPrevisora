@@ -1,0 +1,105 @@
+{% extends 'tienda/base-dash.html' %}
+{% load static %}
+{% block title %}
+    Carrito de compras
+{% endblock %}
+{% block content %}
+        <div class="principal">
+        <div class="central">
+        <div class="fakeimg">
+            {% if mi_carrito|length > 0 %}
+            <table class="tabladecompras">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Remover</th>
+                        <th>Precio</th>
+                        <th>Total / cuotas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in mi_carrito %}
+                    {% with product=item.producto  %}
+                        <tr>
+                            <td>
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{% if product.imagen %} {{ product.imagen.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                                </a>
+                                <p>{{ product.nombre }}</p>
+                            </td>
+                            <td>
+                                <form action="{% url 'tienda:cart_add' product.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ item.update_quantity_form.cantidad }}
+                                    {{ item.update_quantity_form.actualizado }}
+                                    <button><ion-icon name="refresh-circle-outline"></ion-icon></button>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="{% url 'tienda:cart_remove' product.id %}">
+                                  <button><ion-icon name="close-circle-outline"></ion-icon></button></a>
+                            </td>
+                            <td>
+                              {% if product.cuotas > 1 %}
+                              {{ product.cuotas}} x ${{ item.precio}}
+                              {% else %}
+                              ${{ item.precio }}
+                              {% endif %}
+                            </td>
+                            <td>
+                              ${{ item.precio_total }}
+                            </td>
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+                <tr style="background-color: #728e3a; color: white;">
+                    <td><h4>TOTAL A PAGAR</h4></td>
+                    <td colspan="3"></td>
+                    <td colspan="num"><h4>$ {{ mi_carrito.get_total_price }}</h4></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <div id="centrado">
+            <a href="{% url 'tienda:product_list' %}"><button class="custom-boton">Volver a la tienda</button></a>
+            <a href="{% url 'tienda:order_create' %}"><button class="custom-boton">Confirmar compra</button></a>
+            </div>
+  {% else %}
+  <div id="centrado">
+  <div style="font-size: 4em;"><ion-icon name="cart-outline"></ion-icon></div>
+  <br>
+  <div id="titulo"><h2>Carrito vacio</h2></div>
+  <br>
+  <h3>Por favor agregar los productos desde nuestro catalogo.</h3>
+  <br>
+  <a href="{% url 'tienda:product_list' %}"><button class="custom-boton">Volver a la tienda</button></a>
+  </div>
+  {% endif %}
+  </div>
+  </div>
+  <div class="lateral">
+    <div class="fakeimg">
+      <div id="centrado">
+      {% if user.is_authenticated %}
+        <div id="titulo">HOLA {{ user.username | upper }}!!</div>
+        <br>
+        <span>
+        <p>Este es tu carrito de compras; verifica que los productos sean los correctos y los montos a pagar sean exactos</p>
+        <br>
+        <p>Tambien puedes <strong>"agregar"</strong> en cantidad o <strong>"quitar"</strong>
+          productos del carrito, una vez que todo este como lo deseas presiona el boton <strong>"Confirmar compra"</strong></p>
+        <br>
+        <p>Si quieres seguir agregando al carrito solo presiona <strong>"Volver a tienda"</strong></p>
+        <span>
+      {% else %}
+        <div style="font-size: 4em;"><ion-icon name="warning-outline"></ion-icon></div>
+        <h2><div id='titulo'>DEBES ESTAR REGISTRADO PARA PODER RELIZAR LAS COMPRAS</div><h2>
+        <br>
+        <button class="custom-boton">REGISTRARSE</button>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  </div>
+{% endblock %}

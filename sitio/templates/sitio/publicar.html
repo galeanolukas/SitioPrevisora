@@ -1,0 +1,28 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Nuevo{% endblock %}
+{% block content %}
+<div class="contenido">
+<div id="centrado">
+	<div class="form_box">
+	<div id="titulo">Nuevo Contenido</div><BR>
+	<div class="fakeimg">
+    	<form method="POST" enctype="multipart/form-data">
+    		{{ form.media }}
+			<p><strong>Titulo</strong></p>
+        	{{ form.titulo }}
+        	<p><strong>Categoria</strong></p>
+        	{{ form.categoria }}
+        	<p><strong>Texto</strong></p>
+        	{{ form.texto }}
+        	<p>{{ form.imagen }}</p>
+        	<p><strong>Mostrar imagen:</strong></p>
+        	{{ form.mostrar_img }}
+            {% csrf_token %}
+        	<br>
+        	<button type="submit">PUBLICAR</button>
+    	</form>
+	</div>
+	</div>
+</div>
+</div>
+{% endblock %} 

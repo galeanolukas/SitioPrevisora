@@ -1,0 +1,69 @@
+{% extends 'sitio/index.html' %}
+{% block title %}SOLICITUDES{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="form_box">
+			{% titulo 'True' %}BUSCAR SOLICITUDES{% endtitulo %}	
+			{% if resultados %}
+				<div class="fakeimg" style="height: 40%; overflow-y: auto;">
+				<div id="centrado">
+					<table style="overflow-x:auto;   border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+					<tr>
+	  					<th style=" text-align: center; padding: 8px;">Nombre y Apellido</th>
+	  					<th style=" text-align: center; padding: 8px;">Correo</th>
+	  					<th style=" text-align: center; padding: 8px;">Teléfono</th>
+      				<th style=" text-align: center; padding: 8px;">Solicitante</th>
+      				<th style=" text-align: center; padding: 8px;">Estado</th>
+      			</tr>	
+	  				{% for sol in resultados %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ sol.nombre }} {{ sol.apellido }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a style="text-decoration: none;" href="{% url 'aviso' ID=sol.id %}?cli=True">{{ sol.correo }}</a></td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=+54{{ sol.telefono }}&text=Hola%20{{ sol.nombre }}%20{{ sol.apellido }}!%0Aviso:%A0%0A%0Awww.previsoradelnorte.com%0A" target="_blank">{{ sol.telefono }}</a></td>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ sol.usuario.username }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					{% if sol.aprobada %}
+					<a href="{% url 'baja' ID=sol.id %}" onClick="return confirm('¿Quieres dar la Baja a la solicitud?');" style="text-decoration: none;"><button style="font-size: 12px;">Alta</button></a>
+					{% else %}
+					<a class="btn-editar" href="{% url 'alta' ID=sol.id %}" onClick="return confirm('¿Quieres dar el Alta a la solicitud?');" style="text-decoration: none;"><button style="font-size: 12px; background-color:red;">Baja</button></a>
+					{% endif %}
+					</td>				
+					</tr>
+	  				{% endfor %}
+  		   		</table>				
+				</div>
+					<div id="centrado">
+					<p>Total de resultados: <strong>{{ resultados.count }}</strong></p>
+					</div>
+				</div>
+			{% else %}
+					<div class="fakeimg">
+						<div id="centrado">
+						<p><h2>No hay resultados encontrados.!</h2></p>
+						<p>Realiza la búsqueda, </p>
+						</div>
+					</div>
+			{% endif %}
+		</div>
+	</div>
+ 	<div class="rightcolumn">
+ 		<div class="form_box">
+ 			<div class="fakeimg">
+ 			<div id="centrado">
+	 		<form action="" method="POST">
+	 		{% csrf_token %}
+			<p><strong>Buscar en Base de Datos</strong></p>
+			<img src="{% static 'sitio/img/icono-lupa.png' %}" alt="Buscar solicitud">
+			<p> * Ingresa algún dato de búsqueda <strong>correo, dni, nombre, apellido, usuario</strong> o <strong>"todos"</strong> para una lista completa.</p>
+			<input name="entrada" placeholder="INGRESA DATO" id="busqueda"/>
+			<button>BUSCAR</button>
+	 		</form>
+	 		</div>
+			</div>
+		</div>
+	 </div>
+</div>
+{% endblock %}

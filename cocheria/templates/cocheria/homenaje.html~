@@ -1,0 +1,20 @@
+{% extends 'cocheria/index.html' %}
+{% block title %}Nuevo{% endblock %}
+{% block content %}
+<div class="contenido">
+<div id="centrado">
+	<div class="form_box" style="background-color: lightgray;">
+	<div id="titulo">Nuevo Contenido</div><BR>
+	<div class="fakeimg">
+    	<form method="POST" enctype="multipart/form-data">
+    			{{ form.media }}
+				{{ form.as_p }}
+            {% csrf_token %}
+        	<br>
+        	<button type="submit">PUBLICAR</button>
+    	</form>
+	</div>
+	</div>
+</div>
+</div>
+{% endblock %} 

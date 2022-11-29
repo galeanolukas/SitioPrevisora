@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% block title %}Mensaje{% endblock %}
+{% block mensaje %}	
+	<div id="mensaje1" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;"></div>
+						<a class="close" href="#">&times;</a>
+						<div class="content">
+						<div class="fakeimg">
+						{{ msj }}
+						</div>
+						</div>
+					</div>
+	</div>
+{% endblock %}	

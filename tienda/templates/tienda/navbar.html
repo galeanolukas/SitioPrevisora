@@ -1,0 +1,31 @@
+{% load static %}
+<div class="navigation">
+		<ul>
+			<li>
+			{% if user.is_authenticated %}
+			<a href="/tienda/">
+			{% else %}
+			<a href="#ingresar">
+			{% endif %}
+					<span class="icon">
+					<ion-icon name="person-circle-outline"></ion-icon>
+					</span>
+					<span class="title">
+					{% if user.is_authenticated %}
+						{{ user.username | upper }}
+					{% else %}
+						INGRESAR
+					{% endif %}
+					</span>
+			</a>
+			</li>
+			{% for c in categories %}
+			<li {% if category.slug == c.slug %} class="active"{% endif %}>
+			<a href="{{ c.get_absolute_url }}">
+			  <span class="icon">{% if c.icon %}{{ c.icon | safe }}{% endif %}</span>
+				<span class="title">{{ c.nombre | upper }}</span>
+			</a>
+			</li>
+			{% endfor %}
+		</ul>
+</div>

@@ -1,0 +1,11 @@
+	<div class="fakeimg">
+						<table>
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Staff</th>
+	  					<th style=" text-align: center; padding: 6px;">Cobros</th>
+	  					<th style=" text-align: center; padding: 6px;">Afiliacion</th>
+	  					<th style=" text-align: center; padding: 6px;">Ingresos</th>
+      			</tr>
+      			<td></td>
+      			</table>
+    </div>	

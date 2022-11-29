@@ -1,0 +1,36 @@
+{% extends 'panel/panel.html' %}	
+<!-- Block principal -->
+{% block principal %}
+<div class="fakeimg" style="line-height: 70px; font-size:24px; background-color:var(--azul); color:white;">
+<div id="centrado">
+{% if notif_actual %}
+{{ notif_actual.mensaje | safe }}
+{% else %}
+<h2>Presiona el mensaje para ve su contenido--</h2>
+{% endif %}
+</div>
+</div>
+{% endblock %}
+<!-- Block lateral -->
+{% block lateral %}
+<div class="form-box" style="overflow:auto; height: 400px;">
+{% if notifs %}
+{% for notif in notifs %}
+<div class="fakeimg">
+						<a href="{% url 'panel:ver_notif' %}?n={{ notif.id }}" style="text-decoration: none; color: white;">
+						<div class="fakeimg" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+						<p>{{ notif.titulo }}</p><br>
+						<p style="font-size: 8px; ">{{ notif.fecha }}</p>
+						</div>
+						</a>
+</div>
+{% endfor %}
+{% else %}
+<div class="fakeimg">
+<div id="centrado">
+<h1>No hay notificaciones para mostrar :/</h1>
+</div>
+</div>
+{% endif %}
+</div>
+{% endblock %}

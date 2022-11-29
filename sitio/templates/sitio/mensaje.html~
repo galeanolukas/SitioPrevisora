@@ -1,0 +1,26 @@
+{% extends 'sitio/index.html' %}
+{% load static %}
+{% block title %}Mensaje{% endblock %}
+{% load custom_tags %} 
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+			<div class="form_box">	
+				<div class="fakeimg" style="background-color: #2d487d; color: white;">
+				<div id="centrado">
+				{% csrf_token %}
+				{% render_post msj %}
+				</div>
+				</div>
+			</div>
+	</div>
+	<div class="rightcolumn">
+		<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+	
+	</div>
+</div>
+{% endblock %} 

@@ -1,0 +1,67 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Solicitud Afiliacion{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+	<div class="card">		
+			<div class="form_box">
+			<div class="fakeimg">
+			<div id="centrado">
+			{% if user.is_staff %}
+			<div id="titulo">CARGAR SOLICITUD</div>
+<p style="font-size: 12px;">Completa el siguiente formulario con tus datos y luego de verificarlos presiona el boton <strong>"CARGAR"</strong></p>
+			{% else %}	
+			<div id="titulo">NUEVA SOLICITUD</div>
+			<p style="font-size: 12px;">Completa el siguiente formulario con tus datos y luego de verificarlos presiona el boton <strong>"ENVIAR SOLICITUD"</strong></p>
+			{% endif %}
+			<p style="font-size: 10px">El "*" indica campos obligatorios</p>
+			<form method="POST">
+                <p>{{ form.nombre }}</p>
+                <p>{{ form.apellido }}</p>
+                <div class="input-group">
+                <p>{{ form.fecha_nac }}</p>
+                <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                </div>
+                <script src="{% static 'sitio/js/datepicker.js' %}"></script>
+                <p>{{ form.dni }}</p>
+                <p>{{ form.telefono }}</p>
+                <p>{{ form.direccion }}</p>
+                <p>{{ form.correo }}</p>
+                {% if user.is_superuser %}
+                <p style="font-size: 10px;"><strong>Ingrese fecha de alta de la solicitud (En caso de ser un afiliado activo)</strong></p>
+                <p>{{ form.fecha }}</p>
+                {% endif %}
+                {% if plan %}
+                <p>Plan solicitado: {{ form.plan }}</p>
+                {% else %}
+                <p>Elige Plan:</p><p>{{ form.plan }}</p>
+                <p style="font-size: 10px;">Debes elegir de acuerdo a tu edad comprendida.</p>
+                {% endif %}
+                <br>
+                {% csrf_token %}
+				<button type="submit" >{% if user.is_superuser %}CARGAR{% else %}ENVIAR SOLICITUD{% endif %}</button>
+			</form>
+	  	</div>
+		</div>
+		</div>
+	</div>
+	</div>
+	<div class="rightcolumn">
+		<div class="fakeimg">
+		{% titulo 'True' %}AVISO{% endtitulo %}
+		<div id="centrado">
+		{% if user.is_superuser %}		
+		<p>Hola <strong>{{ user.username | upper }}</strong>! Vas a realizar una carga de la solicitud de un afiliado, asegurate que los datos sea correctos.</p>
+		<p>Al finalizar con la carga de datos, veras a continuación el formulario de <strong>ALTA DE CLIENTES</strong> una vez verificados los datos podrás realizar el alta en el sistema.</p>
+		{% else %}
+		<p>Recuerda que al enviar tu solicitud, tus datos quedaran registrados en nuestros sistemas en espera de la aprobación.</p>
+		<p>Un representante de la previsora se pondrá en contacto con usted, para verificar los datos y informate como finalizar el tramite.</p>
+		{% endif %}		
+		<p><h3>Muchas Gracias!!</h3></p>
+		</div>
+		</div>	
+	</div>
+</div>
+{% endblock %} 

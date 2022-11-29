@@ -1,0 +1,64 @@
+{% extends 'tienda/base-dash.html' %}
+{% load static %}
+{% block title %}
+    Carrito de compras | Checkout
+{% endblock %}
+{% block content %}
+<div class="principal">
+	<div class="central">
+	{% block principal %}
+    <div class="container">
+    		<div id="centrado">
+            <div class="form_box">
+			      <div class="fakeimg">
+                <div id="titulo">REGISTRA TU ORDEN</div>
+                <br>
+                <p><h6 class="page-header">Completa el formulario con los datos del comprador</h6></p>
+                <br>
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form.nombre }}
+                    {{ form.dni }}
+                    {{ form.telefono }}
+                    {{ form.email }}
+                    {{ form.direccion }}
+                    <p style='font-size: 10px;'>
+                      <strong>complete en caso de ser afiliado, de lo contrario deje vacio el campo<strong>
+                    </p>
+                    <br>
+                    {{ form.numero_afiliado }}
+                    <button>COMFIRMAR Y PAGAR</button>
+                </form>
+              </div>
+              </div>
+          </div>
+    </div>
+</div>
+{% endblock %}
+<div class="lateral">
+{% block lateral %}
+            <div class="form_box">
+			      <div class="fakeimg">
+                	<div id="titulo">
+                    Tus compras son:
+                  </div>
+                  <br>
+                <ul class="list-group" style="text-decoration:none;">
+                    {% for item in carrito %}
+                        <li class="list-group-item" style="font-size: 24px; text-decoration:none;">
+                        {{ item.cantidad }} x {{ item.producto.nombre }}
+                         en {{ item.product.cuotas }} x
+                        <span>ARS. $ {{ item.precio }}</span>
+                        </li>
+                        <hr>
+                        <br>
+                    {% endfor %}
+                <br>
+                <li class="list-group-item active"><h2>Total: $ {{ carrito.get_total_price }}</h2></li>
+                </ul>
+					</div>
+					</div>
+{% endblock %}
+        </div>
+</div>
+{% endblock %}

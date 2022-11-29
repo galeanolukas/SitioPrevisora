@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends 'panel/panel.html' %}
+{% block title %}Editar {{ num }}{% endblock %}
+{% load custom_tags %}
+{% block principal %}
+{% titulo 'True' %}EDITAR {{ selec.upper }}{% endtitulo %}
+<div class="form_box">
+<div id="centrado">
+			<form method="POST" class="post-form" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button>GUARDAR</button>
+			</form>
+			<br><br>{{ form.erros }}<br>
+</div>
+</div>
+{% endblock %} 

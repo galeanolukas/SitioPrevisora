@@ -1,0 +1,102 @@
+{% extends 'sitio/index.html' %}
+{% block title %}SEARCH{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="card">
+			{% if dbclientes %}
+			<div class="form_box">	
+				{% titulo 'True' %}BUSCAR CLIENTES{% endtitulo %}
+				<div id="centrado">
+				<p style="font-size: 10px">En la lista de resultados tendras opciones: <strong>mandar correo, mensajes, editar o borrar.</strong></p>
+				</div>
+				<div class="fakeimg" style="height: 50%; overflow-y: auto;">
+				
+				{% if resultados %}
+					<table style="overflow-x:auto;   border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Cliente</th>
+	  					<th style=" text-align: center; padding: 6px;">Usuario</th>
+      				<th style=" text-align: center; padding: 6px;">Correo</th>
+      				<th style=" text-align: center; padding: 6px;">Teléfono</th>
+      				<th style=" text-align: center; padding: 6px;">Acciones</th>
+      			</tr>	
+	  				{% for cliente in resultados %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ cliente.datos.nombre }} {{ cliente.datos.apellido }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ cliente.usuario }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a style="text-decoration: none;" href="{% url 'aviso' ID=cliente.datos.id %}?cli=True">{{ cliente.datos.correo }}</a></td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=+54{{ cliente.datos.telefono }}&text=Hola%20{{ cliente.datos.nombre }}%20{{ cliente.datos.apellido }}!%0A%0A%0Awww.previsoradelnorte.com%0A" target="_blank">{{ cliente.datos.telefono }}</a></td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a class="btn-editar" style="text-decoration: none;" href="{% url 'edita_cli' ID=cliente.datos.id %}" style="text-decoration: none;"><img src="{% static 'sitio/img/editar.png' %}"/></a> <a class="btn-editar" href="{% url 'elimina_usuario' ID=cliente.id %}?cli=True" onClick="return confirm('¿Seguro que quieres eliminar cliente?');" style="text-decoration: none;"><img src="{% static 'sitio/img/cerrar.png' %}"/></a></td>
+					
+					</tr>
+	  				{% endfor %}
+  		   		</table>
+  		   		<div id="centrado">
+					<p>Total de resultados: <strong>{{ resultados.count }}</strong></p>
+					</div>
+				{% else %}
+					<div id="centrado">
+					<p><h2>No hay resultados encontrados.!</h2></p>
+					<p>Realiza una nueva búsqueda, completando el campo a tu derecha.</p>
+					</div>
+				{% endif %}
+		  		</div>
+	  		</div>	  	  
+		  {% else %}
+			<div class="form_box">	
+			  <div class="fakeimg">
+		 	   {% titulo 'True' %}BUSCAR USUARIOS{% endtitulo %}
+		 	   <div id="centrado"><p style="font-size: 12px;"><strong>Puedes enviar correo o eliminar usuarios.</strong></p>
+		 	   <p style="font-size: 12px;">también puedes ver si los usuarios están activos (verde) o inactivos (rojo), o bien si son parte del Staff o no</p>
+		 	   </div>
+				{% if resultados %}
+				<table style="overflow-x:auto;   border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+				  	<tr>
+	  					<th style=" text-align: center; padding: 6px;">Usuario</th>
+	  					<th style=" text-align: center; padding: 6px;">Grupo</th>
+      				<th style=" text-align: center; padding: 6px;">Correo</th>
+      				<th style=" text-align: center; padding: 6px;">Acciones</th>
+      			</tr>	
+  					{% for usuario in resultados %}
+					<tr>
+						<td align="center" style=" text-align: center; padding: 6px;">{% if usuario.is_active %}<a style="color: green;">{% else %}<a style="color: red;">{% endif %}{{ usuario.username }}</a></td>
+						<td align="center" style=" text-align: center; padding: 6px;">{% if usuario.is_staff %}<a style="color: green;">Staff</a>{% else %}<a style="color:blue;">Usuario</a>{% endif %}</td>
+						<td align="center" style=" text-align: center; padding: 6px;"><a style="text-decoration: none;" href="{% url 'aviso' ID=usuario.id %}?cli=False">{{ usuario.email }}</a></td>
+						<td align="center" style=" text-align: center; padding: 6px;"><a class="btn-editar" style="text-decoration: none;" href="{% url 'editar_usuario' ID=usuario.id %}" style="text-decoration: none;"><img src="{% static 'sitio/img/editar.png' %}"/></a> <a class="btn-editar" style="text-decoration: none;" href="{% url 'elimina_usuario' ID=usuario.id %}?cli=False" onClick="return confirm('¿Seguro que quieres eliminar usuario?');" style="text-decoration: none;"><img src="{% static 'sitio/img/cerrar.png' %}"/></a>
+						</td>
+					</tr>
+  				   {% endfor %}
+  				</table>
+  				{% else %}
+					<div id="centrado">
+					<p><h2>No hay resultados encontrados.!</h2></p>
+					</div>
+				{% endif %}
+		  		</div>
+			</div>
+		{% endif %}
+		</div>
+	</div>
+ 	<div class="rightcolumn">
+ 		<div class="card">
+ 		<div class="form_box">
+ 			<div class="fakeimg">
+ 			<div id="centrado">
+	 		<form action="" method="POST">
+	 		{% csrf_token %}
+			<p><strong>Buscar en base de datos</strong></p>
+			<img src="{% static 'sitio/img/icono-lupa.png' %}" alt="Buscar afiliado">
+			<p> * Ingresa algún dato de búsqueda <strong>correo, dni, nombre, apellido, usuario</strong> o <strong>"todos"</strong> para una lista completa.</p>
+			<input name="entrada" placeholder="INGRESA DATO" id="busqueda"/>
+			<button>BUSCAR</button>
+	 		</form>
+	 		</div>
+			</div>
+		</div>
+		</div>
+	 </div>
+</div>
+{% endblock %}

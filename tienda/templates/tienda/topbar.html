@@ -1,0 +1,38 @@
+{% load static %}
+<div class="topbar">
+				<div class="toggle">
+				<ion-icon name="swap-horizontal-outline"></ion-icon>
+				</div>
+				<div class="logo">
+					<span class="icon">
+						<ion-icon name="storefront-outline" style="width: 40px; height: 40px; margin: 10px;"></ion-icon>
+			 		</span>
+			  	<span class="title">TIENDA ONLINE</span>
+				</div>
+				<div class="search">
+				<form method="POST">
+				{% csrf_token %}
+				<input type="text" placeholder="Buscar productos" name="{{ name_search }}"/>
+				<button type="submit">
+				<ion-icon name="search-circle-outline"></ion-icon>
+				</button>
+				</form>
+				</div>
+				<a href="#notif1">
+				<div class=''>
+
+				</div>
+				</a>
+				<div class="custom-boton" id="boton-carrito">
+						<a href="{% url 'tienda:cart_detail' %}">
+						<ion-icon name="cart-outline"></ion-icon>
+						{% with totail_items=carrito|length %}
+								{% if carrito|length > 0 %}
+								{{ totail_items }} <span>articulo{{ totail_items|pluralize }}</span>
+								{% else %}
+								<span>0</span>
+								{% endif %}
+						{% endwith %}
+					 </a>
+				</div>
+</div>

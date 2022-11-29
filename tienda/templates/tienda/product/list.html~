@@ -1,0 +1,66 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% block title %}
+    {% if category %} {{ category.nombre }} {% else %} Tienda {% endif %}
+{% endblock %}
+{% block content %}
+		<div id="centrado">
+		<div id="titulo" style="font-size: 30px;">BIENVENIDO/A A NUESTRA TIENDA ONLINE</div>
+		<p style="font-size: 12px;">Todos los artículos que encontraras aquí están sujeto a disponibilidad de stock</p>
+		<p style="font-size: 12px;">Por favor siéntete libre de recorrer y llenar tu carrito de compras, la seguridad en las operaciones esta garantizada.</p>
+		</div>
+   <div class="container-fluid">
+      <div class="row" style="margin-top: 1%">
+              <div class="cardBox">
+              {% if products %}
+                  {% for product in products %}
+                  	{% if product.disponible %}
+                      <div class="card">
+                      	    	{% if user.is_superuser %}
+										<a class="btn-editar" href="/administrador/tienda/product/{{ product.id }}/change/"><img src="{% static 'sitio/img/editar.png' %}"/></a>								
+										{% endif %}
+                        <div class="thumbnail" style="border-color: gray; border-radius: 3px;">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{% if product.imagen %} {{ product.imagen.url }} {% else %} {% static 'img/No-image-found.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                            </a>
+                            <div class="caption">
+                                <h3 class="text-center">
+                                    <a href="{{ product.get_absolute_url }}">{{ product.nombre }}</a>
+                                    
+                                </h3>
+                                <p class="text-center" style="font-size: 24px;"><strong>$ {{ product.precio }}</strong></p>
+                            </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+              {% else %}
+              <div id="centrado">
+              <h1>No hay artículos disponibles en esta categoría</h1> 
+              <p><h1>:(</h1></p>
+              </div>
+              {% endif %}
+              </div>
+
+      </div><!-- /.blog-main -->
+      <div class="rightcolumn">
+		<div class="fakeimg" style="background-color: #2d487d; color: white;">
+		 <div id="centrado">
+            <h4>CATEGORIAS</h4>
+            <ol class="list-unstyled">
+              <li {% if not category %} class="active"{% endif %}><a href="{% url 'tienda:product_list' %}">
+              <div class="custom-boton">TODOS</div></a></li>
+            {% for c in categories %}
+
+              <li {% if category.slug == c.slug %} class="active"{% endif %}>
+                  <a href="{{ c.get_absolute_url }}"><div class="custom-boton">{{ c.nombre | upper }}</div></a>
+              </li>
+            {% endfor %}
+            </ol>
+       </div>
+		</div>
+		</div>
+      </div><!-- /.row -->
+
+ </div><!-- /.container -->
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'clinicas/index.html' %}
+{% block title %}Editar {{ num }}{% endblock %}
+{% load custom_tags %}
+{% block content %}
+<div class="card">
+	<div id="centrado">
+		<div class="fakeimg">
+			{% titulo 'True' %}EDITAR{% endtitulo %}
+			<div class="form_box" style="background-color: lightgray;">
+			<form method="POST" class="post-form" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button class="custom-boton">GUARDAR</button>
+			</form>
+			<br><br><br>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %} 

@@ -1,0 +1,30 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Panel Admin{% endblock %}
+{% load custom_tags %}
+{% block content %}
+<div class="contenido">
+	<div id="centrado">
+		{% titulo 'True' %}PANEL ADMINISTRADOR{% endtitulo %}
+		<div class="form_box">
+			<div class="fakeimg">
+				{% if user.is_superuser %}
+				<div class='cardBox'>
+				<div class='card'><a href="{% url 'nuevo' %}">CREAR CONTENIDO</a></div>
+				<div class='card'><a href="{% url 'buscar' %}?cli=True">VER CLIENTES</a></div>
+            <div class='card'><a href="{% url 'afiliacion' %}?plan=False">CARGAR CLIENTES</a></div>
+            <div class='card'><a href="">CARGAR ARTICULO</a></div>
+				<div class='card'><a href="{% url 'buscar' %}?cli=False">VER USUARIOS</a></div>
+				<div class='card'><a href="{% url 'buscar_afiliado' %}">VER SOLICITUDES</a></div>
+				<div class='card'><a href="{% url 'ver_mensajes' %}">VER MENSAJES</a></div>
+				<div class='card'><a href="/administrador/">BASE DE DATOS</a></div>
+				<div class='card'><a href="{% url 'registro' %}">ADERIR USUARIO</a></div>
+				<div class='card'><a href="{% url 'buscar_cupones' %}">VER CUPONES</a></div>
+				<div class='card'><a href="{% url 'sorteo' %}">REGISTRO SORTEO 2022</a></div>
+				<div class='card'><a href="{% url 'sorteo_api' %}">SORTEO API</a></div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

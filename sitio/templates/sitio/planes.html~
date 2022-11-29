@@ -1,0 +1,29 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Contacto{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="centercolumn">
+		<div class="leftcolumn">
+			<div class="card">
+				{% titulo 'True' %}PLANES Y BENEFICIOS{% endtitulo %}
+				{% if plan %}
+				<div id="centrado">
+					<div class="form_box">	
+					<h3>{{ plan.titulo }}</h3>
+					<img src="" alt="">
+					<p><strong>Edad:</strong> {{ plan.periodo }} años</p>
+					<p><strong>Vig:</strong> {{ plan.vigencia }} meses</p>
+					</div>
+				</div>
+			{% else %}
+			{% endif %}
+			</div>		
+		</div>
+		<div class="rightcolumn">
+			<p>Naaaa</p>		
+		</div>	
+	</div>
+</div>
+{% endblock %} 

@@ -1,0 +1,40 @@
+<html>
+                                <head>
+                                </head>
+                                <body style="margin: 0;font-size: 28px;font-family: Arial, Helvetica, sans-serif;">
+                                <div class="header" style="background-color: lightgray; color: white;">
+                                        <img src="https://www.previsoradelnorte.com/static/logo-pagina.png" alt="">
+                                </div>
+                                <div class="contenido" style="margin-top: 20px; padding:10px"> 
+                                                <div class="fakeimg" style="padding:20px; color: grey; border-radius:15px; font-size: 18px; border: 0.8px solid lightgray;">
+                                                	<div id="centrado" style="margin: 0px auto 0px;text-align:center;"><br><div id="titulo" style="color:#728e3a;"><h2>SOLICITUD COMPLETA!</h2></div> 
+                                                	 <p>Hola <strong>%s %s</strong>!!</p>
+                                                    <p>Gracias por confiar en nosotros, tu <strong>Solicitud de Afiliación</strong> ha sido registrada con éxito.</p>
+                                                    <p>Para confirmar y habilitar su petición, por favor haz click en el siguiente botón.</p>
+                                                    <a href="https://previsoranorte.com/solicitud/validar/?code="%s"">
+                                                    <button style="background: #728e3a;color: white;padding: 10px;font-size: 18px;border-radius: 5px;">CONFIRMA TU SOLICITUD</button>
+                                                    </a>
+                                                    </div>
+                                                </div>
+               						</div>
+                                <footer>
+                                               <div id="caja-pie" style="padding: 10px; background:#2d487d; margin-top: 20px; bottom: 0; text-align: center;color: white; font-size: 14px;">
+                                                    <p>
+                                                    <strong>Visita nuestras redes:</strong><br><br>
+                                                    <a href="https://www.facebook.com/laprevisoradelnorte" target="blank">
+                                                    	<img src="https://www.previsoradelnorte.com/static/face.png" style="width:40px; height:40px; border-radius: 50px; border: 1px solid white; padding:5px;">
+                                                    </a>
+                                                    <a href="" >
+                                                    <img src="https://www.previsoradelnorte.com/static/tweeter.png" style="width:40px; height:40px; border-radius: 50px; border: 1px solid white; padding:5px;" alt="">
+                                                    </a>
+                                                    <a href="" >
+                                                    <img src="https://www.previsoradelnorte.com/static/instagram.png" style="width:40px; height:40px; border-radius: 50px; border: 1px solid white; padding:5px;" alt="">
+                                                    </a>
+                                                    </p>
+                                                    <p>La Previsora del Norte S.R.L<br><br><span class="copyleft">&copy;</span>Copyleft 2020</p>
+                                                    <div class="direccion-bottom" style="text-decoration: none;"><img src="https://www.previsoradelnorte.com/static/ubica-icono.png" style="width: 30px; height: 30px;" /><a style="text-decoration: none; color: white;" href="https://goo.gl/maps/kMesM1AgdZk85Lvz5" target="blank"> Dean Funes 655 - Formosa, Argentina</a></div>
+                                                </div>
+                                       
+                                </footer>
+                                </body>
+                                </html>

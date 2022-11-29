@@ -1,0 +1,63 @@
+{% extends 'tienda/base-dash.html' %}
+{% load custom_tags %}
+{% block title %}Inicio{% endblock %}
+{% load static %}
+{% block content %}
+	{% if products %}
+			<div class="cardBox">
+			{% for product in products %}
+				<div class="card">
+						{% if user.is_superuser %}
+						<a class="btn-editar" href="/administrador/tienda/product/{{ product.id }}/change/">
+							<img src="{% static 'sitio/img/editar.png' %}"/>
+						</a>
+						{% endif %}
+						<a href="{{ product.get_absolute_url }}" style="text-decoration: none;">
+						<div>
+						{% if product.imagen %}
+						<div class="imgBox" style="background-image:url('{{ product.imagen.url }}');">
+						{% else %}
+						<div class="imgBox" style="background-image:url('{% static 'img/No-image-found.jpg' %}');">
+						{% endif %}
+						</div>
+						<hr style="display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; margin-right: auto; border-style: inset; border-width: 1px;">
+								<div class="numeros">
+									{% if product.promo %}
+									<strong>$ {{ product.precio }}</strong>
+									{% else %}
+									<strong>$ {{ product.precio }}</strong>
+									{% endif %}
+									{% if product.cuotas > 1 %}
+									<p style="font-size:12px; color:var(--azul);">en {{ product.cuotas }} x $ {{ product.valor_de_cuotas }}</p>
+									{% endif %}
+								</div>
+								<div class="cardName">
+								{{ product.nombre }}
+								{% if product.stock == 0 %}
+								<p style="color: red; font-size:10px;">Sin stock</p>
+								{% endif %}
+								</div>
+								<div class="catName">{% if category %}{{ category }}{% else %}{{ product.categoria }}{% endif %}</div>
+					 </div>
+				</a>
+				</div>
+			{% endfor %}
+		</div>
+{% else %}
+<div class="principal">
+	<div class="central">
+		<div class="imgBox" style="background-image:url('{% static 'sitio/img/logo-previsora.png' %}');">
+		</div>
+	</div>
+	<div class='lateral'>
+		<div class="fakeimg">
+		<div id="centrado">
+		<div id="titulo">OOPS!!</div>
+		<br>
+		<h3>Estamos trabjando para cargar la tienda con mas productos, muy pronto estaran disponibles!!! ;)</h3>
+		</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock %}

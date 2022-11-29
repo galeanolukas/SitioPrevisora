@@ -1,0 +1,23 @@
+{% extends 'panel/dash-base.html' %}
+{% load custom_tags %}
+{% block title %}Inicio{% endblock %}
+{% load static %}
+{% block content %}
+<div class="cardBox">
+{% block tarjetas %}
+{% include 'panel/card.html' %}
+{% endblock %}
+</div>
+<div class="principal">
+	<div class="central">
+	{% block principal %}
+
+	{% endblock %}
+	</div>
+<div class="lateral">
+	{% block lateral %}
+
+	{% endblock %}
+</div>
+</div>
+{% endblock %}

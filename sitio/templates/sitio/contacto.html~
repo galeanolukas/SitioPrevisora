@@ -1,0 +1,42 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Contacto{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+<div class="leftcolumn">
+	<div class="card">
+		<div id="centrado">			
+			<div class="form_box">
+			<div class="fakeimg" style="background-color: #2d487d; color: white;">
+			{% titulo 'True' %}CONTACTATE CON NOSOTROS!{% endtitulo %}
+			<img src="{% static 'sitio/img/mail.png' %}"/>
+        	<br>
+			<form method="POST">
+				<p>{{ form.Nombre }}</p>
+				<p>{{ form.Telefono }}</p>
+				<p>{{ form.Correo }}</p>
+				<p>{{ form.Mensaje }}</p>
+				{% csrf_token %}
+				<br>
+				<button type="submit">ENVIAR</button>
+			</form>
+	  		</div>
+	  		</div>
+	  </div>
+	</div>
+</div>
+<div class="rightcolumn">
+	<div class="card">
+		<div class="fakeimg">
+	<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte/">Previsora del Norte</a></blockquote></div>
+		</div>
+	</div>
+</div>
+</div>
+	<div class="card">
+			<div class="fakeimg">
+	 			<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3580.45302235186!2d-58.171458!3d-26.1819376!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945ca5e7aad160c7%3A0xb23fe3e02718f644!2sDean%20Funes%20665%2C%20P3600GWB%20Formosa!5e0!3m2!1ses-419!2sar!4v1595211252546!5m2!1ses-419!2sar" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+	 		</div>	
+	</div>
+{% endblock %}

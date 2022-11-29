@@ -1,0 +1,74 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% block title %}
+    Tu Carrito
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row" style="margin-top: 2%">
+        <h2>Tu Carrito de Compras
+            <span class="badge pull-right">
+                {% with totail_items=mi_carrito|length %}
+                    {% if mi_carrito|length > 0 %}
+                        Mi orden de compras:
+                        <a href="{% url 'tienda:cart_detail' %}" style="color: #ffffff;">
+                            {{ totail_items }} artículo{{ totail_items|pluralize }}, $ {{ mi_carrito.get_total_price }}
+                        </a>
+                        {% else %}
+                        Carrito de vacio
+                    {% endif %}
+                {% endwith %}
+            </span>
+        </h2>
+            <table class="table table-striped table-hover">
+                <thead style="background-color: #728e3a; color: white;">
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Remover</th>
+                        <th>Precio por unidad</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in mi_carrito %}
+                    {% with product=item.producto  %}
+                        <tr>
+                            <td>
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{% if product.imagen %} {{ product.imagen.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                                </a>
+                            </td>
+                            <td><strong>{{ product.nombre }}</strong></td>
+                            <td>
+                                <form action="{% url 'tienda:cart_add' product.id %}" method="post">
+                                    {% csrf_token %}
+                                    {{ item.update_quantity_form.cantidad }}
+                                    {{ item.update_quantity_form.actualizado }}
+                                    <button class="custom-boton"> + </button>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="{% url 'tienda:cart_remove' product.id %}"><button class="custom-boton"> - </button></a>
+                            </td>
+                            <td><strong>$ {{ item.precio }}</strong></td>
+                            <td><strong>$ {{ item.precio_total }}</strong></td>
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+                <tr style="background-color: #728e3a; color: white;">
+                    <td><b><h4>TOTAL</h4></b></td>
+                    <td colspan="4"></td>
+                    <td colspan="num"><strong><h4>$ {{ mi_carrito.get_total_price }}</h4></strong></td>
+                </tr>
+                </tbody>
+            </table>
+        <p class="text-right">
+            <a href="{% url 'tienda:product_list' %}"><button class="custom-boton">Seguir comprando</button></a>
+            <a href="{% url 'tienda:order_create' %}"><button class="custom-boton">Confirmar compra</button></a>
+        </p>
+        </div>
+    </div>
+{% endblock %}

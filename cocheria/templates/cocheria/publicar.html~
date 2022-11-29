@@ -1,0 +1,26 @@
+{% extends 'cocheria/index.html' %}
+{% block title %}Nuevo{% endblock %}
+{% block content %}
+{% load custom_tags %}
+<div class="card">
+<div id="centrado">
+	<div class="fakeimg">	
+	{% titulo 'True' %}Nuevo Contenido{% endtitulo %}
+	<div class="form_box" style="background-color: lightgray;">
+    	<form method="POST" enctype="multipart/form-data">
+			<p><strong>Titulo</strong></p>
+        	{{ form.titulo }}
+        	<p><strong>Categoria</strong></p>
+        	{{ form.categoria }}
+        	<p><strong>Texto</strong></p>
+        	{{ form.texto }}
+        	<p>{{ form.imagen }}</p>
+            {% csrf_token %}
+        	<br>
+        	<button type="submit">PUBLICAR</button>
+    	</form>
+	</div>
+	</div>
+</div>
+</div>
+{% endblock %} 

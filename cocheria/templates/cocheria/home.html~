@@ -1,0 +1,81 @@
+{% extends 'cocheria/index.html' %}
+{% block title %}Inicio{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+ <div class="row">
+ 	<div class="centercolumn">
+ 		<div class="leftcolumn">
+    	<div class="card">
+    	{% if principal %}
+    		{% for cont in principal %}
+				 {% if user.is_superuser %}
+					<a class="btn-editar" href="{% url 'cocheria:eliminar' ID=cont.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ cont.titulo }}?');"><img src="{% static 'cocheria/img/cerrar.png' %}"/></a>
+					<a class="btn-editar" href="{% url 'cocheria:editar' ID=cont.id %}"><img src="{% static 'cocheria/img/editar.png' %}"/></a>
+					<br>
+	  			 {% endif %}
+	  			 {% if cont.titulo %}
+    				{% titulo 'True' %}{{ cont.titulo }}{% endtitulo %}
+    				<br>
+    			 {% endif %}
+    			 {% if cont.imagen %}
+    			 {% if cont.mostrar_img %}
+      		 <div class="fakeimg" style="background-image:url({{ cont.imagen.url }}); height:300px; width: 100%;"></div>
+      		 {% endif %}
+      		 {% endif %}
+      		<br>
+      		{% render_post cont.texto %}
+      	{% endfor %}
+      {% else %}
+      	<p>:( No hay Principal......</p>
+      {% endif %}
+    	</div>
+    	</div>
+  		<div class="rightcolumn">
+  		{% if lateral %}
+  			{% for post in lateral %}
+    		<div class="card">
+    				{% if user.is_superuser %}
+					<a class="btn-editar" href="{% url 'cocheria:eliminar' ID=post.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ cont.titulo }}?');"><img src="{% static 'cocheria/img/cerrar.png' %}"/></a>
+					<a class="btn-editar" href="{% url 'cocheria:editar' ID=post.id %}"><img src="{% static 'cocheria/img/editar.png' %}"/></a>
+					<br>
+					{% endif %}
+    			{% if post.titulo %}
+    				{% titulo 'True' %}{{ post.titulo }}{% endtitulo %}
+    			{% endif %}
+    			{% if post.imagen %}
+    				{% if post.mostrar_img %}
+    				<img src="{{ post.imagen.url }}" style="width: 100%">
+    				{% endif %}
+    			{% endif %}
+    			{% render_post post.texto %}
+      	</div>
+      	{% endfor %}
+    	{% else %}
+    		<p> :( no hay Post</p>
+    	{% endif %}   	
+    <div class="card">
+    	{% if noticias %}
+    		{% for art in noticias %}
+    		   {% if user.is_superuser %}
+					<a class="btn-editar" href="{% url 'cocheria:eliminar' ID=art.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ art.titulo }}?');"><img src="{% static 'cocheria/img/cerrar.png' %}"/></a>
+					<a class="btn-editar" href="{% url 'cocheria:editar' ID=art.id %}"><img src="{% static 'cocheria/img/editar.png' %}"/></a>
+				<br>
+				{% endif %}
+    		{% if art.titulo %}
+      	{% titulo 'True' %}<h3>{{ art.titulo }}</h3>{% endtitulo %}
+      	{% endif %}
+      	{% if art.imagen %}
+      	<div class="fakeimg" style="background-image:url({{ art.imagen.url }}); height:50%;"></div>
+      	{% endif %}
+      	{% render_post art.texto %}
+ 			{% endfor %}
+      {% else %}
+      	<p><h2>:( No hay Noticias......</h2></p>
+      {% endif %}
+    </div>
+  		</div>  		  		
+  </div>
+
+</div>
+{% endblock %} 

@@ -1,0 +1,138 @@
+{% load static %}
+{% block notificaciones %}
+{% load custom_tags %}
+{% if notif.count > 0 %}
+	<div id="notif1" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;">NOTIFICACIONES</div>
+						<a class="close" href="#">&times;</a>
+						<div class="content">
+						{% for n in notif %}
+						<a href="{% url 'ver_notif' ID=n.id %}" style="text-decoration: none; color: white;">
+						<div class="fakeimg" style="margin-bottom: 5px; text-align: center; background-color: #728e3a; color: white;">
+						<p>{{ n.titulo }}</p><br>
+						<p style="font-size: 8px; ">{{ n.fecha }}</p>
+						</div>
+						</a>
+						{% endfor %}
+						</div>
+					</div>
+	</div>
+{% endif %}
+{% if messages %}
+<ul class="overlay" id="msg">
+    {% for message in messages %}
+    <div class="popup">
+			<div id="titulo" style="text-align: center;">{{ message.tags }}</div>
+			<a class="close" href="">&times;</a>
+			<div id="centrado">
+			<div class="content">
+			<span style="color: var(--azul); font-size: 2.6em;">
+			 {% if message.tags == 'success' %}
+			 <ion-icon name="thumbs-up-outline"></ion-icon>
+			 {% elif message.tags == 'error' %}
+			 <ion-icon name="bug-outline"></ion-icon>
+			 {% elif message.tags == 'warning'%}
+			 <ion-icon name="warning-outline"></ion-icon>
+			 {% elif message.tags == 'info' %}
+			 <ion-icon name="information-circle-outline"></ion-icon>
+			 {% endif %}
+			 </span>
+    		<li {% if message.tags %} class="{{ message.tags }}"{% endif %}><h2>{{ message }}</h2></li>
+    		</div>
+    		</div>
+   </div>
+    {% endfor %}
+</ul>
+{% endif %}
+<div id="imprimir" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;">IMPRIMIR</div>
+						<a class="close" href="#">&times;</a>
+						<div class="content">
+						<div class="form_box" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+						<div id="centrado">
+						<iframe>{{ pdf | safe}}</iframe><br>
+						<button>ACEPTAR</button>
+						</div>
+						</div>
+						</div>
+					</div>
+	</div>
+<div id="ingresar" class="overlay">
+   <div class="popup">
+ 	 <a class="close" href="#">&times;</a>
+ 	 <div class="login">
+		<div class="form_box">
+		<div id="centrado">
+		<a href="{% url 'home' %}" ><img src="{% static 'sitio/img/logo-previsora-w.png' %}" style="width: 40px; height: 40px;"></a><br>
+		<BR>
+		  <form method="post" action="{% url 'login' %}?next={{ request.path }}">
+		    {% csrf_token %}
+        <p style="font-size: 20px;">Usuario:</p>
+        <input class="form-control" type="username" name="username" value="">
+        <p style="font-size: 20px">Contraseña:</p>
+        <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+        <BR>
+			{% if messages %}
+			{% for message in messages %}
+        		<p style="font-size: 14px; color:yellow;">{{ message }}</p>
+        	{% endfor %}
+        	{% else %}
+        	<BR>
+			{% endif %}
+        <p><a href="{% url 'registro' %}" style="font-size: 12px; text-decoration: none; color: red;">Eres usuario nuevo? Registrate ahora</a></p>
+        <button>INGRESAR</button>
+        <p><a href="#recuperar" style="font-size:12px; color: whitesmoke;">Olvidaste tu clave?</a></p>
+        <!-- <input type="hidden" name="next" value="{{ next }}" /> -->
+		</form>
+		</div>
+		</div>
+  </div>
+</div>
+</div>
+<div id="recuperar" class="overlay">
+   <div class="popup">
+ 	 <a class="close" href="#">&times;</a>
+<div id="centrado">
+		<div class="form_box">
+			<div class="fakeimg">
+		{% titulo 'True' %}RECUPERA TU CONTRASEÑA{% endtitulo %}
+		{% if usuario %}
+			{% titulo 'True' %}LISTO {{ usuario | upper }}!!{% endtitulo %}
+			<p>Revisa tu casilla de correo electrónico, una nueva clave ha sido enviada.</p>
+		{% else %}
+
+			<p>* Para iniciar la recuperación debe ingresar el mismo correo electrónico con el que se registro.</p>
+			<form method="POST" action="{% url 'recuperar' %}">
+					{% csrf_token %}
+					<input/ type="email" placeholder="(*) INGRESE SU CORREO" name="correo_recuperacion" required>
+					<button>CONFIRMAR</button>
+			</form>
+		{% endif %}
+		 </div>
+		</div>
+</div>
+</div>
+</div>
+<div id="calcular" class="overlay">
+		<div class="popup">
+		<div id="titulo" style="text-align: center;">{{ user.username }} CONOCE TU PLAN</div>
+		<a class="close" href="#">&times;</a>
+			<div class="form_box">
+				<div class="fakeimg" style="background-color: #2d487d; color: white;">
+					<div id="centrado">
+						<p>* Ingresa tu edad y presionar el boton <strong>'CONSULTAR'</strong> se te proporcionara la información del plan de afiliados correspondiente.</p>
+						<p>Debes ingresar una edad valida <strong>"1 a 100"</strong> años</p>
+						<form method="POST" action="{% url 'calcular' %}">
+						<input/ placeholder="(*) TU EDAD" name="edad">
+						{% csrf_token %}
+						<br><br>
+						<button>CONSULTAR</button>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+</div>
+{% endblock %}

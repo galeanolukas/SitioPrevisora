@@ -1,0 +1,49 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% block title %}
+    {% if category %} {{ category.nombre }} {% else %} Productos {% endif %}
+{% endblock %}
+
+{% block content %}
+   <div class="container">
+   	<div id="centrado">
+   		<div id="titulo" style="font-size: 30px;">DETALLES DEL ARTICULO</div>
+   	</div>
+      <div class="row" style="margin-top: 2%">
+
+        <div class="col-sm-8 blog-main">
+			 <div class="form_box">
+			 <div class="fakeimg">
+          <div class="blog-post">
+              <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-6 text-right">
+                            <img src="{% if product.imagen %} {{ product.imagen.url }} {% else %} {% static 'img/No-image-found.jpg' %} {% endif %}" alt="..." style="height: 170px; width: auto">
+                        </div>
+                        <div class="col-md-6" style="padding-left: 20px">
+                            <h3>{{ product.nombre }}</h3>
+                            <h6><a href="{{ product.categoria.get_absolute_url }}">{{ product.categoria }}</a></h6>
+                            <p class="text-muted" style="font-size: 20px;"><strong>$ {{ product.precio }}</strong></p>
+                            <form action="{% url 'tienda:cart_add' product.id %}" method="post">
+                                {% csrf_token %}
+                                {{ cart_product_form }}
+                                <button class="custom-boton">Agregar al Carrito</button>
+                            </form>
+                            <br>
+                            <div id="centrado">
+                            <p>{{ product.descripcion|safe|linebreaksbr }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+             
+          </div><!-- /.blog-post -->
+			 </div>
+			 </div>
+        </div><!-- /.blog-main -->
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+{% endblock %}

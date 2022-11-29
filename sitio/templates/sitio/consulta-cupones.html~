@@ -1,0 +1,90 @@
+{% extends 'sitio/index.html' %}
+{% block title %}SEARCH{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="card">
+			<div class="form_box">	
+				{% titulo 'True' %}BUSCAR CUPONES{% endtitulo %}
+				<div id="centrado">
+				<p style="font-size: 10px">En la lista de resultados tendras opciones: <strong>mandar correo, mensajes, editar o borrar.</strong></p>
+				<p style="font-size: 10px">En la columna <strong>"Cupon N°"</strong> los números coloreados indican que cupones están verificados (verde) o no (Rojo)</p>
+				<p style="font-size: 10px;">así también puedes hacer click en ellos para obtener el comprobante <strong>"Pdf"</strong></p>
+				</div>
+				<div class="fakeimg" style="height: 50%; overflow-y: auto;">
+				{% if resultados %}
+					<table style="overflow-x:auto;   border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Nombre y Apellido</th>
+						<th style=" text-align: center; padding: 6px;">Afiliado N°</th>
+	  					<th style=" text-align: center; padding: 6px;">Usuario</th>
+      				<th style=" text-align: center; padding: 6px;">Correo</th>
+      				<th style=" text-align: center; padding: 6px;">Teléfono</th>
+      				<th style=" text-align: center; padding: 6px;">Cupón N°</th>
+      				<th style=" text-align: center; padding: 6px;">Acción</th>
+      			</tr>	
+	  				{% for cupon in resultados %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ cupon.nombre }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ cupon.numero_afiliado }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ cupon.usuario }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a style="text-decoration: none;" href="mailto:{{ cupon.correo }}">{{ cupon.correo }}</a>
+					</td>
+					<td align="center" style=" text-align: center; padding: 6px;">
+					{% if cupon.telefono|length >= 10 %}
+					<a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=+54{{ cupon.telefono }}&text=Hola%20{{ cupon.nombre }}!%0AFelicidades!! ya estas participado del gran sorteo%0A*Se sortea el día 19 de diciembre de 2020*%0ADescarga tu cupón comprobante haciendo click en el link:%0Awww.previsoradelnorte.com{{ cupon.comprobante.url }}%0A" target="_blank">
+					{{ cupon.telefono }}</a>
+					{% else %}
+					{{ cupon.telefono }}
+					{% endif %}
+					</td>
+					{% if cupon.verificado %}
+					<td align="center" style=" text-align: center; padding: 6px; color: green; text-decoration: none;"><a href="{{ cupon.comprobante.url }}" target="blank" style="text-decoration: none; color: green;">{{ cupon.numero_cupon }}</a></td>
+					{% else %}
+					<td align="center" style=" text-align: center; padding: 6px; color: red;"><a href="{{ cupon.comprobante.url }}" target="blank" style="text-decoration: none; color: red;" >{{ cupon.numero_cupon }}</a></td>
+					{% endif %}
+					<td align="center" style=" text-align: center; padding: 6px;">
+					<a class="btn-editar" style="text-decoration: none;" href="/administrador/sitio/cupones/{{ cupon.id }}/change/?_to_field=id&_popup=1" style="text-decoration: none;">
+					<img src="{% static 'sitio/img/editar.png' %}"/></a> <a class="btn-editar" href="/administrador/sitio/cupones/{{ cupon.id }}/delete/" style="text-decoration: none;"><img src="{% static 'sitio/img/cerrar.png' %}"/></a>
+					</td>
+										
+					</tr>
+	  				{% endfor %}
+  		   		</table>
+  		   		<div id="centrado">
+					<p>Total de resultados: <strong>{{ resultados.count }}</strong></p>
+					<a href="{% url 'descarga_csv' %}?data={{ data }}" ><button>EXPORTAR A PLANILLA</button></a>
+					</div>
+				{% else %}
+					<div id="centrado">
+					<p><h2>No hay resultados encontrados.!</h2></p>
+					<p>Realiza una nueva búsqueda, completando el campo a tu derecha.</p>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	</div>
+ 	<div class="rightcolumn">
+ 		<div class="card">
+ 		<div class="form_box">
+ 			<div class="fakeimg">
+ 			<div id="centrado">
+	 		<form action="" method="POST">
+	 		{% csrf_token %}
+			<p><strong>Buscar en base de datos</strong></p>
+			<img src="{% static 'sitio/img/icono-lupa.png' %}" alt="Buscar cupones">
+			<p> * Ingresa algún dato de búsqueda <strong>correo, nombre, numero afiliado, usuario</strong> o <strong>"todos"</strong> para una lista completa.</p>
+			<input name="entrada" placeholder="INGRESA DATO" id="busqueda"/>
+			<button>BUSCAR</button>
+	 		</form>
+	 		</div>
+			</div>
+		</div>
+		</div>
+	 </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% load custom_tags %}
+{% block notificaciones %}
+{% if notifs.count > 0 %}
+	<div id="notif1" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;">NOTIFICACIONES</div>
+						<a class="close" href="">&times;</a>
+						<div class="content">
+						{% for n in notifs %}
+						<a href="{% url 'panel:ver_notif' %}?n={{ n.id }}" style="text-decoration: none; color: white;">
+						<div class="fakeimg" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+						<p>{{ n.titulo }}</p><br>
+						<p style="font-size: 8px; ">{{ n.fecha }}</p>
+						</div>
+						</a>
+						{% endfor %}
+						</div>
+					</div>
+	</div>
+{% endif %}
+{% if messages %}
+<ul class="overlay" id="msg">
+    {% for message in messages %}
+    <div class="popup">
+			<div id="titulo" style="text-align: center;">{{ message.tags }}</div>
+			<a class="close" href="">&times;</a>
+			<div id="centrado">
+			<div class="content">
+			<span style="color: var(--azul); font-size: 2.6em;">
+			 {% if message.tags == 'success' %}
+			 <ion-icon name="thumbs-up-outline"></ion-icon>
+			 {% elif message.tags == 'error' %}
+			 <ion-icon name="bug-outline"></ion-icon>
+			 {% elif message.tags == 'warning'%}
+			 <ion-icon name="warning-outline"></ion-icon>
+			 {% elif message.tags == 'info' %}
+			 <ion-icon name="information-circle-outline"></ion-icon>
+			 {% endif %}
+			 </span>
+    		<li {% if message.tags %} class="{{ message.tags }}"{% endif %}><h2>{{ message }}</h2></li>
+    		</div>
+    		</div>
+   </div>
+    {% endfor %}
+</ul>
+{% endif %}
+	<div id="aviso1" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;">AVISO!!</div>
+						<a class="close" href="#">&times;</a>
+						<div class="content">
+						<div class="form_box" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+						<div id="centrado">
+						{{ msj }}<br>
+						<button>ACEPTAR</button>
+						</div>
+						</div>
+						</div>
+					</div>
+	</div>
+		<div id="imprimir" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;">IMPRIMIR</div>
+						<a class="close" href="#">&times;</a>
+						<div class="content">
+						<div class="form_box" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+						<div id="centrado">
+						<iframe>{{ pdf | safe}}</iframe><br>
+						<button>ACEPTAR</button>
+						</div>
+						</div>
+						</div>
+					</div>
+	</div>
+{% endblock %}

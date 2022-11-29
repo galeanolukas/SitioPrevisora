@@ -1,0 +1,40 @@
+{% extends 'cocheria/index.html' %}
+{% block title %}Panel{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="row">
+	<div class="card">
+	{% if user.is_superuser %}
+	<div id="centrado">
+		{% titulo 'True' %}PANEL ADMINISTRADOR{% endtitulo %}
+		<div class="fakeimg">
+			<div class="form_box" style="padding: 30px;">
+				{% if user.is_superuser %}
+				<div class="panel-contenedor">
+					<div><a href="{% url 'cocheria:nuevo' %}">CREAR CONTENIDO</a></div>
+					<div><a href="{% url 'cocheria:obituario' %}">NUEVO HOMENAJE</a></div>
+					<div><a href="/administrador">DJANGO DB</a></div>
+					<div><a href="{% url 'registro' %}">ADERIR USUARIO</a></div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% else %}
+	<div id="centrado">
+		<div class="fakeimg">
+		{% titulo 'True' %}PANEL USUARIO{% endtitulo %}
+		<p>Desde aquí podrás hacer gestiones de usuario</p>
+				<div class="panel-contenedor">
+					<div><a href="">INFORMAR FALLECIMIENTO</a></div>
+					<div><a href="">CERTIFICADOS</a></div>
+					<div><a href="">INGRESAR A VELORIO ONLINE</a></div>
+					<div><a href="{% url 'calcular' %}">CONSULTAR PLANES</a></div>
+				</div>
+		</div>	
+	</div>	
+	{% endif %}
+	</div>
+</div>
+{% endblock %} 

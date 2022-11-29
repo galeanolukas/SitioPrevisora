@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% extends 'panel/panel.html' %}	
+<!-- Block principal -->
+{% block principal %}
+			<div class="form_box">	
+				{% titulo 'True' %}BUSCAR CLIENTES{% endtitulo %}
+				<div id="centrado">
+				<p style="font-size: 10px">En la lista de resultados tendras opciones: <strong>mandar correo, mensajes, editar o borrar.</strong></p>
+				</div>
+				<div class="fakeimg" style="height: 50%; overflow-y: auto;">
+				
+				{% if resultados %}
+					<table style="overflow-x:auto;   border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Cliente</th>
+	  					<th style=" text-align: center; padding: 6px;">Usuario</th>
+      				<th style=" text-align: center; padding: 6px;">Correo</th>
+      				<th style=" text-align: center; padding: 6px;">Teléfono</th>
+      				<th style=" text-align: center; padding: 6px;">Acciones</th>
+      			</tr>	
+	  				{% for cliente in resultados %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ cliente.datos.nombre }} {{ cliente.datos.apellido }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ cliente.usuario }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a style="text-decoration: none;" href="">{{ cliente.datos.correo }}</a></td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a style="text-decoration: none;" href="https://api.whatsapp.com/send?phone=+54{{ cliente.datos.telefono }}&text=Hola%20{{ cliente.datos.nombre }}%20{{ cliente.datos.apellido }}!%0A%0A%0Awww.previsoradelnorte.com%0A" target="_blank">{{ cliente.datos.telefono }}</a></td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a class="btn-editar" style="text-decoration: none;" href="" style="text-decoration: none;"><img src="{% static 'sitio/img/editar.png' %}"/></a> <a class="btn-editar" href="" onClick="return confirm('¿Seguro que quieres eliminar cliente?');" style="text-decoration: none;"><img src="{% static 'sitio/img/cerrar.png' %}"/></a></td>
+					
+					</tr>
+	  				{% endfor %}
+  		   		</table>
+  		   		<div id="centrado">
+					<p>Total de resultados: <strong>{{ resultados.count }}</strong></p>
+					</div>
+{% else %}
+					<div id="centrado">
+					<p><h2>No hay resultados encontrados.!</h2></p>
+					<p>Realiza una nueva búsqueda, completando el campo a tu derecha.</p>
+					</div>
+{% endif %}
+{% endblock %}
+<!-- Block lateral -->
+{% block lateral %}
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'tienda/base-dash.html' %}
+{% load static %}
+{% block title %}
+    Confirmar Compra
+{% endblock %}
+
+{% block content %}
+<div class="principal">
+      <div class="central">
+          <div class="form_box">
+		      <div class="fakeimg">
+    	    <div id="centrado">
+                <h1 class="page-header">Ultimo paso!!</h1>
+                <br>
+                <p>Su orden de compra ha sido generado con mucho exito!!. </p>
+                <p>Su numero de orden es: <h2><strong>{{ order.id }}</strong></h2></p>
+                <p>Realiza el pago de tu compra desde:</p>
+                <br>
+                <p style="font-size: 12px;">
+                <strong>Desde el botón de pagos de MercadoPago podrás abonar de forma directa con tarjetas de Crédito/Débito.</strong></p>
+    					  <p><img src="https://imgmp.mlstatic.com/org-img/banners/ar/medios/785X40.jpg" title="Mercado Pago - Medios de pago" alt="Mercado Pago - Medios de pago" width="100%;" height="40"/></p>
+    					  <p><div class="cho-container"></div></p>
+    					  <script>
+    						{{ mp_boton | safe }}
+    						</script>
+                <script src="https://sdk.mercadopago.com/js/v2"></script>
+          </div>
+          </div>
+          </div>
+     </div>
+     <div class="lateral">
+
+     </div>
+</div>
+{% endblock %}

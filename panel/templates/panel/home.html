@@ -1,0 +1,49 @@
+{% extends 'panel/inicio.html' %}
+{% block principal %}
+<div class="fakeimg">
+{% if user.is_superuser %}
+<div id="centrado">
+<div id="titulo">Ultimos movimientos</div>
+</div>
+<table>
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Usuario</th>
+	  					<th style=" text-align: center; padding: 6px;">Cobros</th>
+	  					<th style=" text-align: center; padding: 6px;">Afiliacion</th>
+	  					<th style=" text-align: center; padding: 6px;">Ultimo ingreso</th>
+      		</tr>
+					{% for usuario in info_usuarios %}
+					<tr>
+						<td align="center" style=" text-align: center; padding: 6px;">
+							{{ usuario.username }}
+						</td>
+						<td align="center" style=" text-align: center; padding: 6px;">
+						</td>
+						<td align="center" style=" text-align: center; padding: 6px;">
+						</td>
+						<td align="center" style=" text-align: center; padding: 6px;">
+							{{ usuario.last_login | date:"SHORT_DATETIME_FORMAT" }}
+						</td>
+					</tr>
+					{% endfor %}
+
+</table>
+{% elif user.is_staff %}
+
+{% else %}
+<div id="centrado">
+	<div id="titulo">BIENVENIDO {{ user.username | upper }}!</div>
+	<p>Este es el sistema de gestión personal de la previsora, desde aquí podrás gestionarte</p>
+</div>
+{% endif %}
+</div>
+{% endblock %}
+{% block lateral %}
+{% if user.is_superuser %}
+<!-- Informacion de admin -->
+{% elif user.is_staff %}
+<!-- Informacion de Staff -->
+{% else %}
+<!-- Informacion de usuario -->
+{% endif %}
+{% endblock %}

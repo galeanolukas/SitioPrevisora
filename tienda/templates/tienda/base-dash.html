@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+	<head>
+	 <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>TIENDA PREVISORA | {% block title %}{% endblock %}</title>
+	<link rel="icon" type="image/png"  href="{% static 'sitio/img/logo-previsora.png' %}">
+	<link rel="stylesheet"  href="{% static 'css/tienda.css' %}"/>
+	<script type="text/javascript" src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+	</head>
+	<body>
+	<div class="container">
+	{% block navbar %}
+  {% include 'tienda/navbar.html' %}
+	{% endblock %}
+	<div class="main">
+	{% block topbar %}
+	{% include 'tienda/topbar.html' %}
+	{% endblock %}
+	{% block content %}
+
+  {% endblock %}
+	<div id="ingresar" class="overlay">
+  	{% include 'sitio/notifs.html' %}
+  </div>
+	</div>
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+	<script type="text/javascript">
+	let list = document.querySelectorAll('.navigation li');
+
+	function activeLink() {
+		list.forEach((item) => item.classList.remove('hovered'));
+		this.clasList.add('hovered');
+
+	}
+	list.forEach((item) => item.addEventListener('mouseover',activeLink));
+
+	let toggle = document.querySelector('.toggle');
+	let navigation = document.querySelector('.navigation');
+	let main = document.querySelector('.main');
+
+	toggle.onclick = function () {
+		navigation.classList.toggle('active');
+		main.classList.toggle('active');
+	}
+</script>
+</div>
+</body>
+</html>

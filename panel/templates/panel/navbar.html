@@ -1,0 +1,99 @@
+{% load static %}
+<div class="navigation">
+		<ul>
+			<li>
+			<a href="/">
+			   <span class="icon"><img src="{% static 'panel/img/logo-previsora-w.png' %}" alt="Icono" style="width: 40px; height: 40px; margin: 10px;"></span>
+				<span class="title">PREVISORA GESTION</span>
+			</a>
+			</li>
+			<li>
+			<a href="{% url 'panel:panel_dash' %}">
+			<span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+			<span class="title">INICIO</span>
+			</a>
+			</li>
+			{% if user.is_superuser %}
+			<li>
+			<a href="{% url 'panel:ver_r' tp='usuarios' %}">
+			<span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+			<span class="title">USUARIOS</span>
+			</a>
+			</li>
+			<li>
+			<a href="{% url 'panel:ver_r' tp='afiliados' %}">
+			<span class="icon"><ion-icon name="people-circle-outline"></ion-icon></span>
+			<span class="title">AFILIADOS</span>
+			</a>
+			</li>
+			<li>
+			<a href="{% url 'panel:ver_r' tp='solicitudes' %}">
+			<span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+			<span class="title">SOLICITUDES</span>
+			</a>
+			</li>
+			<li>
+			<a href="{% url 'panel:contenidos' tp='nuevo' ID=0 %}">
+			<span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
+			<span class="title">CONTENIDO</span>
+			</a>
+			</li>
+		  <li>
+			<a href="{% url 'panel:ver_msj' %}">
+			<span class="icon"><ion-icon name="mail-unread-outline"></ion-icon></span>
+			<span class="title">MENSAJES</span>
+			</a>
+			</li>
+			<li>
+			<a href="{% url 'panel:tienda' tp='nuevo' %}">
+			<span class="icon"><ion-icon name="storefront-outline"></ion-icon></span>
+			<span class="title">TIENDA</span>
+			</a>
+			</li>
+			<li>
+			<a href="/administrador/">
+			<span class="icon"><ion-icon name="server-outline"></ion-icon></span>
+			<span class="title">BASE DE DATOS</span>
+			</a>
+			</li>
+			<li>
+			<a href="#">
+			<span class="icon"><ion-icon name="construct-outline"></ion-icon></span>
+			<span class="title">CONFIGURACIÓN</span>
+			</a>
+			</li>
+			{% elif user.is_staff %}
+			<li>
+			<a href="{% url 'panel:ver_r' tp='solicitudes' %}">
+			<span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+			<span class="title">SOLICITUDES</span>
+			</a>
+			</li>
+			<li>
+			<a href="">
+			<span class="icon"><ion-icon name="wallet-outline"></ion-icon></span>
+			<span class="title">COMISIONES</span>
+			</a>
+			</li>
+			<li>
+			<a href="{% url 'panel:msj_interno' %}">
+			<span class="icon"><ion-icon name="mail-unread-outline"></ion-icon></span>
+			<span class="title">MENSAJES</span>
+			</a>
+			</li>
+			{% else %}
+			<li>
+			<a href="#">
+			<span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+			<span class="title">PAGAR ONLINE</span>
+			</a>
+			</li>
+			{% endif %}
+			<li>
+			<a href="{% url 'salir' %}">
+			<span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+			<span class="title">SALIR</span>
+			</a>
+			</li>
+		</ul>
+		</div>

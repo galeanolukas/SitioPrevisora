@@ -1,0 +1,62 @@
+from django.db import models
+from django.contrib.auth.models import User
+from sitio.models import *
+
+# Create your models here.
+
+from django.utils import timezone
+
+
+class RolDeUsuario(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='registro')
+    es_vendedor = models.BooleanField(default=False)
+
+# Dirección IP y número de visitas al sitio web
+class Userip(models.Model):
+    ip=models.CharField(verbose_name='Dirección IP',max_length=30)    #ip address
+    count=models.IntegerField(verbose_name='Visitas',default=0) # Las visitas ip
+    class Meta:
+        verbose_name = 'Acceder a la información del usuario'
+        verbose_name_plural = verbose_name
+    def __str__(self):
+        return self.ip
+
+#Total de visitas al sitio web
+class VisitNumber(models.Model):
+    count=models.IntegerField(verbose_name='Total de visitas al sitio web',default=0) #Total de visitas al sitio web
+    class Meta:
+        verbose_name = 'Total de visitas al sitio web'
+        verbose_name_plural = verbose_name
+    def __str__(self):
+        return str(self.count)
+
+##class RegistroVendedor(models.Model):
+##    usuario = models.OneToOneField('auth.User',
+##                                    on_delete=models.CASCADE,
+##                                   related_name='vendedor', null=True, blank=True)
+##    
+
+# Estadísticas de visitas de un día
+class DayNumber(models.Model):
+    day=models.DateField(verbose_name='Fecha',default=timezone.now)
+    count=models.IntegerField(verbose_name='Número de visitas al sitio web',default=0) #Total de visitas al sitio web
+    class Meta:
+        verbose_name = 'Estadísticas de visitas diarias al sitio web'
+        verbose_name_plural = verbose_name
+    def __str__(self):
+        return str(self.day)
+        
+
+class PagosxMes(models.Model):
+    mes = models.CharField(max_length=10, verbose_name='Mes', default=timezone.now().strftime('%m/%Y'))
+    total = models.IntegerField(blank=True, null=True)
+    inf_pago = models.ForeignKey(Pago,
+                                 on_delete=models.CASCADE,
+                                 related_name="pago")
+
+    class Meta:
+        verbose_name = 'Pago Realizado'
+        verbose_name_plural = 'Pagos del Mes'
+
+    def __str__(self):
+        return str(self.mes.strftime("%m/%Y"))

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% extends 'panel/panel.html' %}
+{% load static %}
+{% block title %} Mensajes{% endblock %}	
+{% load custom_tags %}
+{% load static %}
+{% block principal %}
+<div class="form_box">
+{% if mensaje %}
+<div id="centrado">
+				
+		<div id="titulo">{{ mensaje.nombre.upper }}
+		</div>
+		<div id='centrado' style="width: 40px; height: 40px; color: var(--azul)" >
+		<ion-icon name="mail-open-outline"></ion-icon></div>
+		<p><strong>{{ mensaje.email }}</strong></p><br>
+		<textarea>
+		{{ mensaje.texto }}		
+		</textarea>
+		<a href="{% url 'panel:enviar_mail' tp='contacto' ID=mensaje.id %}" >
+		<button class="custom-boton">RESPONDER</button>
+		</a>
+</div>
+{% else %}
+		<div id="centrado">
+		<div id="titulo">MENSAJES
+		</div>{{ ultimo_msj }}</div>
+{% endif %}
+</div>
+{% endblock %}
+{% block lateral %}
+				{% titulo 'True' %}MENSAJES DE CONTACTOS{% endtitulo %}
+				<div id="centrado">
+				</div>
+				<div class="fakeimg" style="height: 400px; overflow-y: auto;">
+				{% if mensajes %}
+					<table style="overflow-x:auto;   border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd;">
+					<tr>
+						<th style=" text-align: center; padding: 6px;">Nombre y Apellido</th>
+      				<th style=" text-align: center; padding: 6px;">Fecha</th>
+      				<th style=" text-align: center; padding: 6px;">Accion</th>
+      			</tr>	
+	  				{% for msj in mensajes %}
+      			<tr>
+					<td align="center" style=" text-align: center; padding: 6px;"><a href="{% url 'panel:ver_msj' %}?id={{ msj.id }}">{{ msj.nombre }}</a></td>
+					<td align="center" style=" text-align: center; padding: 6px;">{{ msj.fechayhora }}</td>
+					<td align="center" style=" text-align: center; padding: 6px;"><a id="BtnModal" href="#myModal"><button class="custom-boton" style="font-size: 12px;">VER</button></a>
+					<div id="myModal" class="modal">
+  						<div class="modal-content">
+  						<div class="fakeimg" style="font-size: 16px; color: white;">
+    					<span class="cerrar">&times;</span>
+    					{{ msj.texto|safe }}
+    					<br>
+    					<a href="{% url 'panel:enviar_mail' tp='contacto' ID=msj.id %}" ><button class="custom-boton">RESPONDER</button></a>
+    					</div>
+    					</div>
+    				</div>
+    				</td>		
+					</tr>
+	  				{% endfor %}
+  		   		</table>
+				{% else %}
+					<div id="centrado">
+					<p><h2>No hay mensajes nuevos !</h2></p>
+					<p>Realiza una nueva búsqueda, completando el campo a tu derecha.</p>
+					</div>
+				{% endif %}
+			</div>
+{% endblock %}

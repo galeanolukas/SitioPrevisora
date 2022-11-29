@@ -1,0 +1,65 @@
+{% load custom_tags %}
+{% block notificaciones %}	
+{% if notifs.count > 0 %}
+	<div id="notif1" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;">NOTIFICACIONES</div>
+						<a class="close" href="">&times;</a>
+						<div class="content">
+						{% for n in notifs %}
+						<a href="{% url 'panel:ver_notif' %}?n={{ n.id }}" style="text-decoration: none; color: white;">
+						<div class="fakeimg" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+						<p>{{ n.titulo }}</p><br>
+						<p style="font-size: 8px; ">{{ n.fecha }}</p>
+						</div>
+						</a>
+						{% endfor %}
+						</div>
+					</div>
+	</div>
+{% endif %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="popup">
+			<div id="titulo" style="text-align: center;">AVISO!!</div>
+			<a class="close" href="">&times;</a>
+			<div id="centrado">
+			<div class="content">
+			<p style="color: greenyellow; width: 60px; height: 60px;" align="center"><ion-icon name="thumbs-up-outline"></ion-icon></p>
+    		<li {% if message.tags %} class="{{ message.tags }}"{% endif %}><h2>{{ message }}</h2></li>
+    		</div>
+    		</div>
+   </div>
+    {% endfor %}
+</ul>
+{% endif %}
+	<div id="aviso1" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;">AVISO!!</div>
+						<a class="close" href="#">&times;</a>
+						<div class="content">
+						<div class="form_box" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+						<div id="centrado">
+						{{ msj }}<br>
+						<button>ACEPTAR</button>
+						</div>
+						</div>
+						</div>
+					</div>
+	</div>
+		<div id="imprimir" class="overlay">
+					<div class="popup">
+						<div id="titulo" style="text-align: center;">IMPRIMIR</div>
+						<a class="close" href="#">&times;</a>
+						<div class="content">
+						<div class="form_box" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+						<div id="centrado">
+						<iframe>{{ pdf | safe}}</iframe><br>
+						<button>ACEPTAR</button>
+						</div>
+						</div>
+						</div>
+					</div>
+	</div>
+{% endblock %}	

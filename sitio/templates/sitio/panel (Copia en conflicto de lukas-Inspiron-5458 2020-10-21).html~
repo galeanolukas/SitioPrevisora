@@ -1,0 +1,25 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Panel Admin{% endblock %}
+{% load custom_tags %}
+{% block content %}
+<div class="contenido">
+	<div id="centrado">
+		{% titulo 'True' %}PANEL ADMINISTRADOR{% endtitulo %}
+		<div class="form_box">
+			<div class="fakeimg">
+				{% if user.is_superuser %}
+				<div class="panel-contenedor">
+					<div><a href="{% url 'nuevo' %}">CREAR CONTENIDO</a></div>
+					<div><a href="{% url 'buscar' %}?cli=True">VER CLIENTES</a></div>
+					<div><a href="{% url 'afiliacion' %}?plan=False">CARGAR CLIENTES</a></div>
+					<div><a href="{% url 'buscar' %}?cli=False">VER USUARIOS</a></div>
+					<div><a href="{% url 'buscar_afiliado' %}">VER SOLICITUDES</a></div>
+					<div><a href="/administrador">BASE DE DATOS</a></div>
+					<div><a href="{% url 'registro' %}">ADERIR USUARIO</a></div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Pagos Online{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="card">
+			<div class="form_box">	
+			<div class="fakeimg" style="background-color: #2d487d; color: white;">
+			{% titulo 'True' %}PAGA TUS CUOTAS ONLINE{% endtitulo %}
+			<div id="centrado">
+			{% if estado == 'aprobado' %}
+			<form action="" method="POST">
+			{% csrf_token %}
+			{{ msj | safe }}
+			<button type="submit">DESCARGAR COMPROBANTE</button>
+			</form>
+			{% elif estado == 'pendiente' %}
+			{{ msj | safe }}
+			{% elif estado == 'error' %}
+			{{ msj | safe }}
+			{% else %}
+				{% if resultados %}
+				{% for resultado in resultados %}
+						<p>Hola <strong>{{ resultado.apellidonombre }} !!</strong></p>
+						<p><img src="{% static 'sitio/img/isologoVertical.png' %}" alt=""></p>
+						<p>El importe a pagar de tu cuota es de: <h1><strong>
+						$ <input style="text-align:center; width: 50%;" type="number" name="monto" value="{{ resultado.importetotal }}" min="0.00" max="10000.00" step="0.01"></strong></h1></p>
+						<p style="font-size: 12px;">
+            	   <strong>Desde el botón de pagos de MercadoPago podrás abonar de forma directa con tarjetas de Crédito/Débito.</strong></p>
+					   <p><img src="https://imgmp.mlstatic.com/org-img/banners/ar/medios/785X40.jpg" title="Mercado Pago - Medios de pago" alt="Mercado Pago - Medios de pago" width="785" height="40"/></p>
+					   <p><div class="cho-container"></div></p>
+					   <script>
+						{{ mp_boton | safe }}
+						</script>	 	 
+						
+					{% endfor %}
+					<script src="https://sdk.mercadopago.com/js/v2"></script>
+					{% else %}
+					{% if tp == 'cuota' or tp == None %}
+					<p>Ponemos a disposición esta forma de pago, usando el botón de pago de MERCADOPAGO.</p>
+					<img src="{% static 'sitio/img/ReciboEjemplo.png' %}" alt="">
+					<form action="" method="POST">
+								{% csrf_token %}
+					<p style="font-size: 14px;">Ingresar <strong>N° Afiliado o DNI (sin puntos)</strong> luego presione <strong>'CONSULTAR'</strong>.</p>
+					{% if msj %}
+						<p>{{ msj | safe }}<p>
+					{% endif %}
+					{% if num_afiliado %}
+					<input name="data_num" type="number" placeholder="N° DE AFILIADO" id="data_num" value="{{ num_afiliado }}" required />
+					{% else %}
+					<input name="data_num" type="number" placeholder="N° DE AFILIADO / DNI" id="data_num" required />
+					{% endif %}
+					<p><button>CONSULTAR</button></p>
+	 				</form>
+	 			{% else %}
+	 				<p><h1>{{ solicitud.nombre }}</h1></p>
+					<p>Perfecto!! ultimo paso para habilitar tu afiliación..</p>
+					<form action="" method="POST">
+					{% csrf_token %}
+					<p style="font-size: 14px;">Ingresar <strong>N° Afiliado o DNI (sin puntos)</strong> luego presione <strong>'CONSULTAR'</strong>.</p>
+					{% if msj %}
+						<p>{{ msj | safe }}<p>
+					{% endif %}
+					{% if num_afiliado %}
+					<input name="data_num" type="number" placeholder="N° DE AFILIADO" id="data_num" value="{{ num_afiliado }}" required />
+					{% else %}
+					<input name="data_num" type="number" placeholder="N° DE AFILIADO / DNI" id="data_num" required />
+					{% endif %}
+					<p><button>CONSULTAR</button></p>
+	 				</form>	 			
+	 			{% endif %}					
+				{% endif %}
+			</div>
+			{% endif %}
+			</div>
+			</div>
+			</div>
+	</div>
+	<div class="rightcolumn">
+		<div class="card">
+			<div class="fakeimg">
+			</div>
+		</div>
+	<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+	</div>	
+</div>
+{% endblock %}
+
+

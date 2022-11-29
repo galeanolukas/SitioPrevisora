@@ -1,0 +1,113 @@
+{% load static %}
+{% load custom_tags %} 
+<html>
+{% block header %}
+	<title>Previsora del Norte | {% block title %}{% endblock %}</title>
+	<link rel="icon" type="image/png"  href="{% static 'sitio/sitio/img/logo-previsora.png' %}">
+	<link rel="stylesheet" href="{% static 'sitio/css/estilo.css' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="{% static 'sitio/js/brython.js' %}"></script>
+   <script type="text/javascript" src="{% static 'sitio/js/brython_stdlib.js' %}"></script>
+   <script type="text/javascript" src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+   <script src="https://sdk.mercadopago.com/js/v2"></script>
+   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+   {{ form.media }}
+{% endblock %}
+<body onload="brython()">
+		<div id="fb-root"></div>
+		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v9.0" nonce="o15jc5FJ"></script>
+		<div class="header" id="top" style="background-image: url({% static 'sitio/img/Formosa-4.png' %}); background-repeat: no-repeat; background-position: top;">
+  			<img src="{% static 'sitio/img/logo-pagina.png' %}" style="width: 300px; height: 100px;" />
+  			<div class="direccion"><img src="{% static 'sitio/img/icono-ubica.png' %}" /><a href="https://goo.gl/maps/kMesM1AgdZk85Lvz5" target="blank">Dean Funes 655 - Formosa, Argentina</a>
+  		</div>
+  		</div>
+  		<script type="text/python" src="{% static 'sitio/scripts/submenu.py' %}" id="script0"></script>
+		<div class="navbar" id="Barra">
+  			<a class="active" href="{% url 'home' %}">INICIO</a>
+  			<a href="#" id="menu1">BENEFICIOS</a>
+  			<a href="{% url 'tienda:product_list' %}">TIENDA</a>
+  			<a href="{% url 'clientes' %}" >CLIENTES</a>
+  			<a href="{% url 'contacto' %}">CONTACTO</a>
+  			<a href="{% url 'registro' %}" >REGISTRATE</a>			
+  			<a href="{% url 'cocheria:home' %}" >COCHERIA</a>
+  			<a style="font-size:15px;" class="icon" onclick="MostrarMenu()">&#9776;</a>
+  			{% if user.username %}
+  				<a class="login" href="{% url 'salir' %}" onClick="return confirm('¿Seguro que quieres cerrar sesion?');"><img src="{% static 'sitio/img/User-cerrar.png' %}"/></a>
+				<a class="login" href="{% url 'panel' %}">{{ user.username }}</a>
+				{% if user.is_staff %}
+				<a href="#notif1" class="login">
+  					{% if notif %}
+  					<i class="fa fa-bell" style="font-size:24px;color:red;"></i>
+  					<span style="color: white; position: absolute; font-size: 14px;">
+  					<strong>{{ notif.count }}</strong></span> 	
+  					{% endif %}
+				</a>
+				{% endif %}
+			{% else %}
+  						<a class="login" href="{% url 'panel' %}">Ingresar <img src="{% static 'sitio/img/User.png' %}"/></a>
+			{% endif %}
+		</div>
+		<div class="subnavbar" id="Subbarra">
+			{% if imagenes %}
+			{% for i in imagenes %}
+				<a id="menu1" href="{% url 'mostrar' %}?search={{ i.titulo }}">{{ i.titulo }}</a>
+			{% endfor %}
+			{% else %}
+			{% endif %}
+		</div>
+	{% include 'sitio/notifs.html' %}
+<div class="contenido">
+ 	{% block content %}
+ 	
+ 	{% endblock %}
+</div>
+<a class='flotante-up' id="flotante-up" href="#top">
+	<button><img src="{% static 'sitio/img/back-button.png' %}" border="0"/></button>
+</a>
+<script type="text/python" src="{% static 'sitio/scripts/w-button.py' %}" id="script2"></script>
+<div class='flotante-whattsapp'>
+	<button id="bot-whattsapp"><img src="{% static 'sitio/img/whatts-icon.png' %}" border="0"/><strong> Atención por mensajes</strong>
+	    <span id="info-num">
+	    	<strong>
+	    		<p><img src="{% static 'sitio/img/logo-previsora-w.png' %}" alt=""><a href="https://api.whatsapp.com/send?phone=+543704278890" target="blank"> 370-4278890</a></p>
+	    		<p><img src="{% static 'sitio/img/logo-previsora-w.png' %}" alt=""><a href="https://api.whatsapp.com/send?phone=+543704207491" target="blank"> 370-4207491</a></p>
+	    		<p><img src="{% static 'sitio/img/logo-previsora-w.png' %}" alt=""><a href="https://api.whatsapp.com/send?phone=+543704026911" target="blank"> 370-4026911</a></p>
+	    	</strong>
+	    <br>	
+	    </span>	
+	</button>
+</div>
+<script type="text/javascript" src="{% static 'sitio/js/menu.js' %}"></script> 
+{% block footer %}
+<div class="footer">
+	<div class="pie-colum">
+		<div id="caja-pie">
+			<p>
+			<div class="share-iconos">
+				<strong>Visita nuestras redes:</strong><br><br>
+				<a href="https://www.facebook.com/laprevisoradelnorte" target="blank"><img src="{% static 'sitio/img/face.png' %}"></a>
+				<a href="" ><img src="{% static 'sitio/img/tweeter.png' %}" alt=""></a>
+				<a href="" ><img src="{% static 'sitio/img/instagram.png' %}" alt=""></a>
+			</div>
+				<div class="menu-pie" style="padding-top: 5px;">
+				<a href="{% url 'clientes' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Clientes</strong></a>
+				<a href="{% url 'tienda:product_list' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Tienda</strong></a>
+				<a href="{% url 'cocheria:home' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Cocheria</strong></a>
+				<a href="{% url 'contacto' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Contacto</strong></a>
+				<a href="{% url 'registro' %}" class="menu-pie" style="text-decoration: none; color: white; font-size: 12px;"><strong>Registro</strong></a>
+				</div>
+			</p>
+			<p style="padding-top: 10px;">La Previsora del Norte S.R.L<br><br><span class="copyleft">&copy;</span>Copyleft {% now 'Y' %}</p>
+			<div class="direccion-bottom"><img src="{% static 'sitio/img/ubica-icono.png' %}" style="width: 30px; height: 30px;" /><a href="https://goo.gl/maps/kMesM1AgdZk85Lvz5" target="blank"> Dean Funes 655 - Formosa, Argentina</a>
+  			</div>
+  				<p style="font-size: 10px; color: white;">Desarrollado por: 
+				<strong><a href="mailto:galeanolukas@gmail.com" style="text-decoration:none; color:white;">galeanolukas@gmail.com</a></strong>
+				</p>
+		</div>
+	</div>
+</div> 
+{% endblock %}
+</body>
+</html>

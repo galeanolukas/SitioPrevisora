@@ -1,0 +1,660 @@
+html {
+background-color:whitesmoke;    
+}
+
+@font-face {
+  font-family: "BirdsofParadise";
+  src: url("/static/cocheria/fonts/Lobster.ttf");
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  height: auto;
+  }
+
+* {
+  box-sizing: border-box;
+}
+
+
+#titulo {
+color: #EABE3F;
+font-size: 30px;
+text-shadow: 1px 2px black;
+margin-top: 10px;
+font-family:Helvetica;
+}
+
+.contenedor{
+width: auto;
+height:100%; 
+background-color:transparent;
+}
+
+.slides {
+height:600px;
+background-size:cover;
+background-repeat: no-repeat;
+background-position: center center;
+align-content: center;
+padding: 30px;
+}
+
+
+.team{
+  display: flex;
+  justify-content: center;
+  width: auto;
+  text-align: center;
+  flex-wrap: wrap;
+  margin-top: 10%;
+}
+
+.team .team_member {
+  background: #907f3e;
+  margin: 10px;
+  margin-bottom: 30px;
+  width: 600px;
+  padding: 20px;
+  line-height: 20px;
+  color: white;  
+  position: relative;
+  border-radius: 5px;
+}
+
+.team .team_member h1{
+  color: white;
+  font-size: 32px;
+  margin-top: 50px;
+}
+
+.team .team_member aside.role{
+  color: white;
+  margin: 12px 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  display: table;
+}
+
+.team .team_member .team_img{
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid white;
+}
+
+.team .team_member .team_img img{
+  width: 250px;
+  height: 250px;
+  padding: 10px;
+}
+
+.team .team_member .team_img a:hover {
+transition: 0.4s;
+border:2px solid white;
+
+}
+ 
+.contenido {
+  transition: margin-left .5s;
+  padding: 0;
+  width:100%;
+  color: lightslategray;
+}
+
+.trans-navbar{
+transition: 0.3s;
+}
+
+.navbar {
+	height: auto;
+	width: 100%;
+	margin:0px auto 0px; 
+	text-align: center;
+  	overflow: hidden;
+  	background-color: rgba(0, 0, 0, 0.6);
+  	border-radius: 1px;
+  	z-index: 1;
+   position: absolute;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.5s;
+}
+
+.navbar a:hover {
+  background-color: #907f3e;
+  color: white;
+}
+
+.navbar a.active {
+background: #907f3e;
+  color: white;
+  padding: 17px;
+}
+
+.navbar a.active:hover {
+  color: white;
+}
+
+.navbar .icon {
+  display: none;
+}
+
+.navbar a.login {
+  ##border-radius: 5px;	
+  height:auto;
+  width: auto;
+  font-size:16px;
+  color: white;
+  float: right;
+  display: inline-block;
+}
+
+.navbar a.login img {
+vertical-align: middle;
+
+}
+ 
+.navbar a.login:hover {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.custom-boton{
+  color: white;
+  text-align: center;
+  background-color: #907f3e;
+  padding: 14px 16px;
+  text-decoration: none;
+  margin-right:5px;
+  margin-bottom:5px;
+  margin-top:10px;
+  border:2px white solid;
+  border-radius: 5px;
+}
+
+.custom-boton:hover {
+	transition: 2s;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.form_transp input {
+ background: rgba(0, 0, 0, 0.2);
+ border: 1px solid white;
+ color: white;
+ border-radius: 5px;
+}
+
+.form_transp textarea {
+ background: rgba(0, 0, 0, 0.2);
+ border: 1px solid white;
+ color: white;
+  border-radius: 5px;
+}
+
+form{
+  padding: 20px;
+  margin: 0 auto;
+}
+
+form input {
+  margin-bottom: 15px;
+  font-family: "Roboto", sans-serif;
+  width: 70%;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; 
+  border: none; 
+  color: #525c66; 
+  font-size: 1em;
+  resize: horizontal; 
+}
+
+form textarea {
+  margin-bottom: 15px;
+  font-family: "Roboto", sans-serif;
+  width: 70%;
+  height: 30%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; 
+  border: none; 
+  color: #525c66; 
+  font-size: 1em;
+  resize: horizontal;
+  resize:vertical; 
+}
+
+form button {
+width: 60%;
+background: #907f3e;
+color: white;
+padding: 10px;
+font-size: 18px;
+border-radius: 5px;
+position: relative;
+}
+
+form button:hover{
+	transition: 1s;
+	background: rgba(0, 0, 0, 0.8);
+}
+
+.custom-boton:hover {
+  transition: 1s;
+  color: white;
+  border:2px white solid;
+}
+
+.btn-editar img{
+opacity:0.6;
+float:right;
+width:16px;
+height:16px;
+margin-right:5px;
+margin-left:5px;
+}
+
+.btn-editar img:hover{
+opacity:1.0;
+}
+
+.content {
+padding: 16px;
+}
+
+.sticky {
+position: fixed;
+top: 0;
+width: 100%;
+}
+
+.sticky_menu {
+position: fixed;
+top:0;
+display:block;
+}
+
+.sticky_menu + .content {
+padding-top: 10px;
+}
+
+.cabecera {
+font-family:BirdsofParadise;
+padding:10px;
+height: 35%;
+border-bottom: 1.5px brown solid;
+color:white;
+border: 1px solid white;
+overflow-y: auto;
+margin-bottom:10px;
+text-align:center;
+background-size: 100% 50%;
+background-repeat: no-repeat;
+background-position: right top;
+background-attachment: fixed;
+}
+
+#centrado{margin: 0px auto 0px;
+text-align:center;}
+
+.centercolumn {
+width: auto;
+height: 100%;
+padding: 10px;
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {   
+  float: left;
+  width: 75%;   
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 25%;
+}
+
+/* Fake image */
+.fakeimg {
+  background-size:100% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment:fixed; 
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Add a card effect for articles */
+.card {
+  padding: 20px;
+  margin-top: 10px;
+  /*/border: 1px solid #804000;/*/
+  color: #515151;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+div.conimagen {
+  width: 100%;
+  height: 80%;
+  margin: 5px 5px;
+  padding: 10px;
+  text-align: left;
+  color: white;
+  background-color:rgba(0, 0, 0, 0.2);
+  background-size:100% 1;
+  background-repeat: no-repeat;
+  background-position:left;
+  background-attachment: fixed;
+}
+
+div.conimagen button
+{
+	float: none;
+}
+
+div.izquierda {
+	border-radius: 10px;
+	width: 50%;
+	height: 95%;
+   float: right;
+   padding: 10px;
+   padding-left: 20px;
+   margin: auto;
+   background-color: rgba(0, 0, 0, 0.6);
+}
+
+div.izquierda:hover{
+ transition: 1s;
+ background-color:rgba(0, 0, 0, 0.8);
+}
+
+.panel-contenedor {
+  display: grid;
+  height: auto;
+  width: 100%;
+  align-content: center;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  background-color: transparent;
+  padding: 10px;
+}
+
+.panel-contenedor a {
+text-decoration: none;
+color: white;
+}
+
+.panel-contenedor div:hover{
+background-color: rgba(0, 0, 0, 0.8);
+}
+
+.panel-contenedor > div {
+  background-color: #907f3e;
+  text-align: center;
+  padding: 20px;
+  font-size: 20px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  transition: 0.5s;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
+
+.copyleft {
+  display:inline-block;
+  transform: rotate(180deg);
+}
+
+.direccion-bottom {
+font-size: 12px;
+opacity: 0.9;
+}
+
+.direccion-bottom a {
+text-decoration:none;
+color:white; 
+}
+
+.direccion-bottom img {
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+	opacity: 0.9;
+}
+
+.flotante-whattsapp {
+    display:scroll;
+        position:fixed;
+        bottom:20px;
+        right:0px;
+        padding-right:10px;
+}
+.flotante-whattsapp button {
+	border: 1px solid black; 
+	opacity:0.7;
+	padding:8px; 
+	border-radius:42px;
+	color: white;
+	background-color: black;
+	border: 2px solid white;
+}
+
+.flotante-whattsapp img {
+	vertical-align: middle;
+	width: 62px;
+	height: 58px;
+}
+
+.flotante-whattsapp span {
+display: none;
+transition: 0.6s;
+}
+
+.flotante-whattsapp a {
+text-decoration: none;
+color: white;
+opacity:0.9;
+}
+
+.flotante-whattsapp a:hover{
+	opacity:1;
+	color:black; 
+}
+
+.flotante-whattsapp button:hover{
+	transition: 1s;
+	color: white;
+	opacity:0.9;
+	background-color: #1bd741;
+}
+
+
+#caja-pie {
+color: white;
+background-color: #907f3e;
+font-size: 15px;
+}
+
+.share-iconos img {
+	width: 43px;
+	height: 42px;
+	padding: 3;
+ 	margin: 5px;
+  	-webkit-border-radius: 50px;
+  	-moz-border-radius: 50px;
+  	border-radius: 50px;
+  	border: 1px solid white;
+}
+
+.share-iconos img:hover{
+	opacity: 1;
+	background-color:rgba(0 , 0, 0, 0.3);
+	transition: 0.4s;    
+}
+
+.fondo_de_pie {
+	font-size: 10px;
+}
+
+#btn-share {
+color:white;
+font-size:10px;
+float:center;
+margin-top:5px;
+padding:5px;
+
+}
+#btn-share img {
+width: 35px;
+padding: 5px;
+border: 0;
+box-shadow: 1;
+border-radius: 50px;
+display: inline;
+border: 1px solid white;
+}
+#btn-share img:hover {
+transition: 2s;
+background-color: lightgray;
+}
+
+
+.pie {
+  padding: 10px;
+  background-color: #907f3e;
+  margin-top: 20px;
+  bottom: 0;
+  text-align: center;
+  color: white;
+}
+
+.pie hr {
+color:white;
+}
+
+
+@media only screen and (max-width:620px) {
+  /* Para telefonos Mobiles: */
+  .cabecera {width:100%; height: 40%; font-size: 30%;}
+  
+	.panel-contenedor {
+	width: 100%;
+	grid-template-columns: auto;	
+	} 
+  
+  .card {padding: 1px;}
+  
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
+  .slides {
+  height: 100%;}
+  
+	.team {
+	margin-top: 40%;	
+	}
+	   
+  .form_box{
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .form_box input {
+    width: 100%;
+  }
+  .form_box textarea{
+    width: 100%;
+  }
+  
+  img.avatar {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .menu-lateral a {
+    text-align: center;
+    float: none;
+  }
+  .contenido {margin-left: 0;
+	width:100%;}
+	
+  div.conimagen {
+  background-size:100% 1;
+  background-repeat: no-repeat;
+  background-position:bottom;
+  width:100%;
+  height:100%;  
+  }
+  
+  div.izquierda{
+  	width: 100%  
+  }
+  
+  
+}
+
+@media screen and (min-height: 600px){
+	.flotante {
+		display: none;
+		}		
+}
+
+@media screen and (max-width: 500px) {
+  div.conimagen img {
+	width:100%;  
+  }
+  
+  .navbar a:not(:first-child) {display: none;}
+  
+  .navbar a.icon {
+    float: right;
+    display: block;
+  }
+  
+    .navbar {
+	height: auto;
+	opacity: 0.8;
+	}
+	  
+  .navbar.responsive .icon {
+    position: absolute;
+    right: 0;
+    bottom:0;
+  }
+  .navbar.responsive a {
+    float: none;
+    display: block;
+    text-align: center;
+	 transition:all 0.6s ease;
+  }
+  
+}

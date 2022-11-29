@@ -1,0 +1,45 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Alta de afiliacion{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+	<div class="card">		
+			<div class="form_box">
+			<div class="fakeimg">
+			<div id="centrado">	
+			<div id="titulo">PAGAR CUOTA DE MEMBRESÍA </div>
+			<p>El valor de tu cuota es de: </p>
+			<p style="font-size: 24px;"><strong>${{ valor_cuota }}</strong></p>
+			<p style="font-size: 12px;">Selecciona  la forma de pago y luego presione  <strong>"REALIZAR PAGO""</strong></p>
+			<form method="POST">
+				 		{% csrf_token %}
+			  <select name="pago_opc" id="pago_opc">
+			  {% for m in medios %}
+			  {% if m.id == 2 %}
+			  <option value="{{ m.id }}"  selected>{{ m.nombre }}</option>
+			  {% else %}
+    				<option value="{{ m.id }}" >{{ m.nombre }}</option>
+    		  {% endif %}
+    			{% endfor %}
+           </select>
+				<button type="submit" >REALIZAR PAGO</button>
+			</form>
+	  	</div>
+		</div>
+		</div>
+	</div>
+	</div>
+	<div class="rightcolumn">
+		<div class="fakeimg">
+		{% titulo 'True' %}AVISO{% endtitulo %}
+		<div id="centrado">
+		<p>Recuerda que al enviar tu solicitud, tus datos quedaran registrados en nuestros sistemas en espera de la aprobación.</p>
+		<p>Un representante de la previsora se pondrá en contacto con usted, para verificar los datos y informate como finalizar el tramite.</p>
+		<p><h3>Muchas Gracias!!</h3></p>
+		</div>
+		</div>	
+	</div>
+</div>
+{% endblock %} 

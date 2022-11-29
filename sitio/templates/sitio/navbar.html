@@ -1,0 +1,38 @@
+{% load static %}
+{% load custom_tags %}
+<script type="text/python" src="{% static 'sitio/scripts/submenu.py' %}" id="script0"></script>
+<div class="navbar" id="Barra">
+  <a class="active" href="{% url 'home' %}">INICIO</a>
+  <a href="#" id="menu1">BENEFICIOS</a>
+  <a href="{% url 'tienda:product_list' %}">TIENDA</a>
+  <a href="{% url 'clientes' %}" >CLIENTES</a>
+  <a href="{% url 'contacto' %}">CONTACTO</a>
+  <a href="{% url 'registro' %}" >REGISTRATE</a>
+  <a href="{% url 'cocheria:home' %}" >COCHERIA</a>
+  <a style="font-size:15px;" class="icon" onclick="MostrarMenu()">&#9776;</a>
+  {% if user.username %}
+    <a class="login" href="{% url 'salir' %}" onClick="return confirm('¿Seguro que quieres cerrar sesion?');">
+      <ion-icon name="close-circle-outline"></ion-icon>
+    </a>
+  <a class="login" href="{% url 'panel' %}">{{ user.username }}</a>
+  {% if user.is_staff %}
+      {% if notif %}
+      <a href="#notif1" class="login">
+      <i class="fa fa-bell" style="font-size:24px;color:red;"></i>
+      <span style="color: white; position: absolute; font-size: 14px;">
+      <strong>{{ notif.count }}</strong></span>
+      </a>
+      {% endif %}
+  {% endif %}
+{% else %}
+        <a class="login" href="{% url 'panel' %}"><span>Ingresar<span><ion-icon name="person-outline"></ion-icon></a>
+{% endif %}
+</div>
+<div class="subnavbar" id="Subbarra">
+{% if imagenes %}
+{% for i in imagenes %}
+  <a id="menu1" href="{% url 'mostrar' %}?search={{ i.titulo }}">{{ i.titulo }}</a>
+{% endfor %}
+{% else %}
+{% endif %}
+</div>

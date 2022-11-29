@@ -1,0 +1,57 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Registro{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+<div class="leftcolumn">
+	<div class="card">
+		<div id="centrado">			
+			<div class="form_box">
+			<div class="fakeimg">
+			<div id="titulo">VALIDAR REGISTRO</div>
+			{% if usuario.is_active %}
+			<h2>{{ usuario.email }}</h2>
+			<p><img src="{% static 'sitio/img/ok-icon.png' %}" alt="AVISO"></p>
+			<p><strong>Ya eres usuario activo en nuestro sitio, solo te queda ingresar!</strong></p>
+			<a href="{% url 'clientes' %}" ><button>INGRESAR</button></a>
+			{% else %}
+			<h2>{{ usuario.email }}</h2>
+			<p><img src="{% static 'sitio/img/ok-icon.png' %}" alt="AVISO"></p>
+			<p>Ultimo paso, para activar tu cuenta necesitamos que completes esto datos y al terminar presiona el botón <strong>"CONFIRMAR"</strong></p>
+			<form action="" method="POST">
+			{% csrf_token %}
+			<p>{{ form.nombre }}</p>
+			<p>{{ form.telefono }}</p>
+			<p>{{ form.ciudad }}</p>
+			<p style="font-size: 12px;">Si ya eres un afiliado activo, ingresa tu numero de afiliado, de lo contrario deja en campo vacio.</p>
+			<p>{{ form.num_afiliado }}</p>
+			{% if form.errors %}
+					<span style="color: red;">{{ form.errors }}</span>
+			{% endif %}        		
+        		<BR>
+			<button type="submit">CONFIRMAR</button>
+			</form>
+			{% endif %}
+	  		</div>
+	  		</div>
+	  </div>
+	</div>
+</div>
+<div class="rightcolumn">
+	<div class="card">
+		<div class="fakeimg">
+		{% titulo 'True' %}AVISO{% endtitulo %}
+		<div id="centrado">
+		<p>Al completar el <strong>formulario de registro</strong> podrás acceder al servicio de gestión en linea en la opción "CLIENTES"</p>
+		</div>		
+		</div>
+	</div>
+	<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+</div> 
+</div>
+{% endblock %}   

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Comprobante de pago N°: {{ numero }}</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #007cae;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #007cae;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                margin-left: 40%;
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+        </style>
+    </head>
+    <body>
+        <div class='wrapper'>
+            <div class='header'>
+                <p class='title'>COMPROBANTE DE PAGO</p>
+            </div>
+            
+        <div>
+        <hr class='hrItem' />
+        <div class='details'>
+				<br>AFILIADO: <strong> {{ afiliado }}</strong>
+            <br>CONCEPTO:<strong> {{ concepto }}</strong>
+				<br>IMPORTE: <strong> $ {{ monto }}</strong>
+				<br>MEDIO: <strong> {{ medio }}</strong>
+				<br>PAGO ID: <strong> {{recibo_n }}</strong>
+				<br>FECHA: <strong> {{ fecha }}</strong>
+            <hr class='hrItem' />
+            <br><img src="https://www.previsoradelnorte.com/static/sitio/img/logo-pagina.png" alt="Logo" style="width: 220px; height: 80px;">
+            <p>Dean Funes 655 - Formosa Capital</p>
+            <a style="align-content: center; font-size: 12px;">www.previsoradelnorte.com</a>
+        </div>
+    	  </div>
+    </body>
+</html>

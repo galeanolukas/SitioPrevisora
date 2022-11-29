@@ -1,0 +1,55 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Tienda{% endblock %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+		<div class="card">
+			{% titulo 'True' %}TIENDA ONLINE{% endtitulo %}
+			<div class="fakeimg">
+			<div id="centrado">
+			<p>Tenemos algunos productos disponibles a la venta, si eres afiliado de la previsora podrás acceder a <strong>INCREÍBLES DESCUENTOS</strong></p>
+			<p>Para poder realizar tu pedido de compra tienes que estar logueado; si aun no eres afiliado a la <strong>PREVISORA</strong>, por favor <a href="{% url 'registro' %}">registrate</a>.</p>
+			{% if tienda %}
+			<div class="con-cajas">
+			{% for producto in tienda %}
+					<div class="columnas">
+						<div class="cajas">
+   					{% if user.is_superuser %}
+							<a class="btn-editar" href="{% url 'eliminar' ID=producto.id %}" onClick="return confirm('¿Seguro que quieres borrar el post {{ producto.titulo }}?');"><img src="{% static 'cocheria/img/cerrar.png' %}"/></a>
+							<a class="btn-editar" href="{% url 'editar_articulo' ID=producto.id %}"><img src="{% static 'cocheria/img/editar.png' %}"/></a>
+							<br>
+						{% endif %}
+							{% if producto.imagen %}
+							<img src="{{ producto.imagen.url }}" alt="">
+							{% endif %}
+							<p><h3>{{ producto.titulo }}</h3></p>
+							{% render_post producto.texto %}
+							<p style="color:white; height:10%; font-size: 40px; padding: 10px;"><strong>${{ producto.valor }}</strong></p>
+							{% if user.username %}
+							<a href="{% url 'comprar' ID=producto.id %}"><button class="custom-boton">COMPRAR</button></a>
+							{% else %}
+							<a href="{% url 'registro' %}" onClick="return confirm('Registrate para realizar compra!. Deseas registrarte?');" ><button class="custom-boton">COMPRAR</button></a>
+							{% endif %}
+						</div>						
+					</div>
+			{% endfor %}
+			</div>
+			
+			{% else %}
+				<p><h2>:( No hay productos disponibles.. </h2></p>
+			{% endif %}
+			</div>
+			</div>
+		</div>	
+	</div>
+	<div class="rightcolumn">
+		<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+		</div>
+	</div>
+</div> 
+{% endblock %}

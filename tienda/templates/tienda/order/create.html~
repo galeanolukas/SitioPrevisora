@@ -1,0 +1,49 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% block title %}
+    CARRITO DE COMPRAS | Checkout
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    		<div id="centrado">
+    		<div id="titulo" style="font-size: 34px;">REGISTRA TU ORDEN</div>
+    		</div>
+        <div class="row" style="margin-top: 1%">
+            <div class="col-md-8">
+            	<div class="form_box">
+			      <div class="fakeimg" style="background-color: #2d487d; color: white;">
+			      <div id="centrado">
+                <h3 class="page-header">Completa con los datos del comprador</h3>
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}<br>
+                    <button>CONTINUAR</button>
+                </form>
+                </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+            	<div class="form_box">
+			      <div class="fakeimg" style="background-color: #2d487d;">
+                <div class="page-header">
+                	<div id="centrado" style="color: white;">
+                    Resumen de tu compra
+                  </div>
+                </div>
+                <ul class="list-group">
+                    {% for item in carrito %}
+                        <li class="list-group-item" style="font-size: 18px;">
+                        {{ item.cantidad }} x {{ item.producto.nombre }}
+                        <span>ARS. $ {{ item.producto.precio }}</span>
+                        </li>
+                    {% endfor %}
+                <li class="list-group-item active"><h2>Total: $ {{ carrito.get_total_price }}</h2></li>
+                </ul>
+					</div>
+					</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% extends 'panel/panel.html' %}
+{% load static %}
+{% block title %} Mensajes{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block principal %}
+<div class="form_box">
+{% if buzon.count == 1 %}
+<div id="centrado">
+		<div id="titulo">Mensaje de {{ buzon.de }}</div>
+		<div id='centrado' style="width: 40px; height: 40px; color: var(--azul)" >
+		<ion-icon name="mail-open-outline"></ion-icon></div>
+		<p><strong> para {{ buzon.para }}</strong></p><br>
+		<textarea>
+		{{ buzon.msj }}
+		</textarea>
+		<a href="" >
+		<button class="custom-boton">RESPONDER</button>
+		</a>
+</div>
+{% else %}
+		<div id="centrado">
+		<div id="titulo">TUS MENSAJES
+		</div>{{ ultimo_msj }}</div>
+{% endif %}
+</div>
+{% endblock %}
+{% block lateral %}
+				{% titulo 'True' %}BUZON DE MENSAJES{% endtitulo %}
+				<div class="form-box" style="overflow:auto; height: 400px;">
+				{% if buzon %}
+				{% for msj in buzon %}
+				<div class="fakeimg">
+										<a href="{% url 'panel:msj_interno' ID=msj.id %}" style="text-decoration: none; color: white;">
+										<div class="fakeimg" style="margin-bottom: 5px; text-align: center; background-color: var(--verde); color: white;">
+										<p>{{ msj.de }}</p><br>
+										<p style="font-size: 8px; ">{{ msj.fecha }}</p>
+										</div>
+										</a>
+				</div>
+				{% endfor %}
+				{% else %}
+				<div class="fakeimg">
+				<div id="centrado">
+				<h1>No has recibido mensajes :/</h1>
+				</div>
+				</div>
+				{% endif %}
+				</div>
+{% endblock %}

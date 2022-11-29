@@ -1,0 +1,68 @@
+{% extends 'tienda/base-dash.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    {{ product.categoria }} | {{ product.nombre }}
+{% endblock %}
+{% block content %}
+<div class="principal">
+	<div class="central">
+   <div id="centrado">
+     <div id="titulo">DETALLES DEL ARTICULO</div>
+             <div class="row">
+               <div class="card">
+                        <br>
+                       <div class="imgBox">
+                           <img src="{% if product.imagen %} {{ product.imagen.url }} {% else %} {% static 'img/No-image-found.jpg' %} {% endif %}" alt="..."/>
+                       </div>
+                       <hr>
+                       <div class="descripcion">
+                           <div id="centrado">
+                            {% if product.descripcion %}
+                           <p>{{ product.descripcion|safe|linebreaksbr }}</p>
+                           {% else %}
+                           <h4>El vendedor no cargo ninguna descripcion del articulo :/</h4>
+                           {% endif %}
+                           </div>
+                       </div>
+
+              </div>
+            </div>
+  </div>
+</div>
+<div class="lateral">
+  <div class="form_box">
+    <div class="fakeimg">
+      <div id='centrado'>
+        <div id='titulo'>
+          <h2>{{ product.nombre }}</h2>
+          <h5><a href="{{ product.categoria.get_absolute_url }}">{{ product.categoria }}</a></h5>
+        </div>
+        <br>
+        <br>
+        <p class="precio" style="font-size: 2em;"><strong>$ {{ product.precio }}</strong></p>
+        {% if product.cuotas > 1 %}
+        <p style="font-size:18px; color:var(--azul);">en {{ product.cuotas }} x $ {{ product.valor_de_cuotas }}</p>
+        {% endif %}
+        <br>
+        <p><strong>{{ product.stock }} disponible{{ product.stock | pluralize }}</strong></p>
+        <br>
+        <form action="{% url 'tienda:cart_add' product.id %}" method="post">
+          {% csrf_token %}
+          <br>
+          <hr>
+          <p>Cantidad</p>
+          <p>{{ cart_product_form.cantidad|attr:"autofocus"}}</p>
+          <p></p>
+          <p>pagas en cuotas ? {{ cart_product_form.cuotas }}</p>
+          <br>
+          <button>Agregar al carrito</button>
+        </form>
+        <br>
+        <button class="custom-boton"><a href="{% url 'tienda:shop_now' product.id %}">Comprar ahora</a></button>
+        <br>
+     </div>
+  </div>
+ </div>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'sitio/index.html' %}
+{% block title %}Cupon Pago{% endblock %}
+{% load custom_tags %}
+{% load static %}
+{% block content %}
+<div class="row">
+	<div class="leftcolumn">
+			<div class="form_box">	
+				<div class="fakeimg">
+				<div id="centrado">
+				{% titulo 'True' %}HOLA <strong>{{ user.username | upper }} !!</strong>{% endtitulo %}
+				{% if metodo == "1" %}
+				<p style="font-size: 14px;">
+				Con estos datos realiza la transferencia bancaria, luego de realizar la misma por favor cargue su comprobante y presione el botón "INFORMAR PAGO"</p>
+				<p style="font-size: 14px;">Se admiten varios formatos del comprobante tanto de texto como capturas o imágenes ".docx .pdf .png .jpg .giff" etc.</p>
+				<div class="fakeimg" style="background-color: #2d487d; color: white;">
+				<form method="POST" enctype="multipart/form-data">			
+				{% csrf_token %}	
+				<p>Caja de Ahorro:<h3>11000011604500101</h3></p>
+				<p>CBU:<h3>3150110501001160450017</h3></p>
+				<p>Alias<h3>MOTO.LUZ.PISO</h3></p>
+				<h1><strong>$ {{ form.valor }}</strong></h1>
+				<p>{{ form.cliente }}</p>
+				<p>{{ form.recibo_n }}</p>
+				<p>{{ form.medio }}</p>
+				<p>{{ form.fecha }}</p>
+				<p style="font-size: 12px;"><strong>Subí tu archivo comprobante o imagen de captura</strong></p>			
+				{{ form.comprobante }}
+				<button>INFORMAR PAGO</button>
+				</form>
+				</div>
+				{% else %}
+				<p><img src="{% static 'sitio/img/isologoVertical.png' %}" alt=""></p>
+				<p>El monto a pagar de tu recibo es de: <h1><strong>$ <input style="text-align:center; width: 50%;" type="number" name="monto" value="{{ monto }}" min="0.00" max="10000.00" step="0.01"></strong></h1></p>
+				<p style="font-size: 12px;"><strong>Desde el botón de pagos de MercadoPago podrás abonar de forma directa con tarjetas de Crédito/Débito.</strong></p>
+				<p><img src="https://imgmp.mlstatic.com/org-img/banners/ar/medios/785X40.jpg" title="Mercado Pago - Medios de pago" alt="Mercado Pago - Medios de pago" width="785" height="40"/></p>
+				<form method="POST" action="{% url 'procesar' %}">
+  					<script src="https://www.mercadopago.com.ar/integrations/v1/web-tokenize-checkout.js" 
+  					data-public-key="{{ cuenta_mp.public_key }}"; 
+  					data-elements-color="#c0392b"; 
+  					data-transaction-amount="{{ monto }}";>
+  					</script>
+  					{% csrf_token %}
+				</form>
+				{% endif %}
+			</div>
+			</div>
+		</div>
+	</div>
+   <div class="rightcolumn">
+	<div class="card">
+		<div class="form_box">
+			<div class="fakeimg">
+ 			<div id="centrado">
+ 			{% titulo 'True' %}AVISO{% endtitulo %}
+ 			<p>Cada transaccion quedara registrada en nuestra base de datos, verificada por personal administrativo de la <strong>Previsora Del Norte</strong></p>
+ 			<p>Ante cualquier duda no dude en realizar su consulta presionando el botón de abajo.</p>
+ 			<p><a href="{% url 'contacto' %}" ><button class="custom-boton">CONSULTAS</button></a></p>
+			</div>
+			</div>	
+		</div>
+	</div>
+	<div class="card">
+			<div class="fakeimg">
+				<div class="fb-page" data-href="https://www.facebook.com/laprevisoradelnorte" data-tabs="timeline" data-width="300" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/laprevisoradelnorte" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/laprevisoradelnorte">Previsora del Norte</a></blockquote></div>		
+			</div>
+	</div>	
+	</div>			
+</div>
+{% endblock %} 
