@@ -35,6 +35,7 @@ import pytz, os, csv
 rango_sorteo = (1500, 5000)
 online = True
 
+#Funcion tag para redireccionar urls a un home de desarrollo 
 def is_online(function):
     def _function(request,*args, **kwargs):
         if online:
