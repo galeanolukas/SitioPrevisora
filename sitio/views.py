@@ -35,7 +35,7 @@ import pytz, os, csv
 rango_sorteo = (1500, 5000)
 online = True
 
-#Funcion tag para redireccionar urls a un home de desarrollo 
+#Funcion tag para redireccionar urls a un home de desarrollo
 def is_online(function):
     def _function(request,*args, **kwargs):
         if online:
@@ -46,7 +46,7 @@ def is_online(function):
 
     return _function
 
-# Vista del home
+# Vista del home por defecto
 @is_online
 def home(request):
     change_info(request)
@@ -56,7 +56,7 @@ def home(request):
     notificaciones = Notificaciones.objects.filter(activa=True).order_by('-id')
     return render(request, 'sitio/home.html', {'imagenes':servicios, 'principal':posts_principal, 'lateral':posts_lateral, 'notif':notificaciones})
 
-
+#Pagina de error
 def error_404(request, exception):
     return render(request, 'sitio/error404.html')
 
